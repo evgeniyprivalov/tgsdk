@@ -12,6 +12,8 @@ from .entities.chat import Chat
 from .entities.chatlocation import ChatLocation
 from .entities.chatmember import ChatMember
 from .entities.chatpermissions import ChatPermissions
+from .entities.chatinvitelink import ChatInviteLink
+from .entities.chatmemberupdated import ChatMemberUpdated
 from .entities.files.photosize import PhotoSize
 from .entities.files.audio import Audio
 from .entities.files.voice import Voice

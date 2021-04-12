@@ -27,6 +27,7 @@ from tgsdk import (
 	Document,
 	ChatPhoto,
 	ChatMember,
+	ChatInviteLink,
 	UserProfilePhotos,
 	File,
 	Chat,
@@ -1930,6 +1931,98 @@ class Bot(TelegramEntity):
 			timeout=timeout,
 			kwargs=kwargs
 		)
+
+	def create_chat_invite_link(
+		self,
+		chat_id: ID,
+		expire_date: Optional[int] = None,
+		member_limit: Optional[int] = None,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> ChatInviteLink:
+		"""
+		https://core.telegram.org/bots/api#createchatinvitelink
+
+		"""
+		payload = {
+			"chat_id": self.build_chat_id(chat_id)
+		}
+
+		if expire_date is not None:
+			payload["expire_date"] = expire_date
+
+		if member_limit is not None:
+			if member_limit > 99999:
+				member_limit = 99999
+
+			payload["member_limit"] = member_limit
+
+		_result = self._post(
+			"createChatInviteLink",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+		return ChatInviteLink.de_json(_result)
+
+	def edit_chat_invite_link(
+		self,
+		chat_id: ID,
+		invite_link: str,
+		expire_date: Optional[int] = None,
+		member_limit: Optional[int] = None,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> ChatInviteLink:
+		"""
+		https://core.telegram.org/bots/api#createchatinvitelink
+
+		"""
+		payload = {
+			"chat_id": self.build_chat_id(chat_id),
+			"invite_link": invite_link
+		}
+
+		if expire_date is not None:
+			payload["expire_date"] = expire_date
+
+		if member_limit is not None:
+			if member_limit > 99999:
+				member_limit = 99999
+
+			payload["member_limit"] = member_limit
+
+		_result = self._post(
+			"editChatInviteLink",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+		return ChatInviteLink.de_json(_result)
+
+	def revoke_chat_invite_link(
+		self,
+		chat_id: ID,
+		invite_link: str,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> ChatInviteLink:
+		"""
+		https://core.telegram.org/bots/api#createchatinvitelink
+
+		"""
+		payload = {
+			"chat_id": self.build_chat_id(chat_id),
+			"invite_link": invite_link
+		}
+
+		_result = self._post(
+			"revokeChatInviteLink",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+		return ChatInviteLink.de_json(_result)
 
 	def pin_chat_message(self):
 		pass

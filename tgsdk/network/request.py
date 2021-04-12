@@ -17,13 +17,12 @@ from typing import (
 import certifi
 import urllib3
 from urllib3.connection import HTTPConnection
-from urllib3.util.timeout import Timeout
 
 from tgsdk import (
 	InputFile,
 	InputMedia
 )
-from .errors import (
+from tgsdk.network.errors import (
 	TelegramException,
 	TimeOutError,
 	NetworkError,
@@ -36,6 +35,7 @@ from .errors import (
 
 
 class Headers:
+	CONNECTION = "keep-alive"
 	SERVER = "Telegram-API-SDK"
 	USER_AGENT = "tgsdk (https://pypi.org/project/tgsdk/)"
 
@@ -49,24 +49,30 @@ class Request(object):
 	"""
 
 	"""
-	__slots__ = ("_conn_pool_size", "_connect_timeout", "_read_timeout", "_conn_pool")
+	__slots__ = ("_conn_pool_size", "_connect_timeout", "_read_timeout", "_conn_pool", "headers")
 
 	def __init__(
 		self,
 		conn_pool_size: int = 10,
-		connect_timeout: float = 5,
+		connect_timeout: float = 10,
 		read_timeout: float = 5
 	):
 		self._conn_pool_size = conn_pool_size
 		self._connect_timeout = connect_timeout
 		self._read_timeout = read_timeout
 
+		self.headers = {
+			"Server": Headers.SERVER,
+			"User-Agent": Headers.USER_AGENT,
+			"Connection": Headers.CONNECTION
+		}
+
 		socket_options = HTTPConnection.default_socket_options + [
 			(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
 		]
 		pool_timeout = urllib3.Timeout(
 			connect=self._connect_timeout,
-			read=read_timeout,
+			read=self._read_timeout,
 			total=None
 		)
 
@@ -76,7 +82,8 @@ class Request(object):
 			cert_reqs="CERT_REQUIRED",
 			ca_certs=certifi.where(),
 			socket_options=socket_options,
-			timeout=pool_timeout
+			timeout=pool_timeout,
+			headers=self.headers
 		)
 
 		self._conn_pool = urllib3.PoolManager(**kwargs)
@@ -117,13 +124,15 @@ class Request(object):
 		:param kwargs:
 		:return:
 		"""
-		headers = {
-			"Server": Headers.SERVER,
-			"User-Agent": Headers.USER_AGENT,
-			"connection": "keep-alive"
-		}
+		if "body" in kwargs:
+			_body = kwargs["body"]
+			if isinstance(_body, str):
+				kwargs["body"] = _body.encode("utf-8")
+			elif isinstance(_body, dict):
+				kwargs["body"] = json.dumps(_body).encode("utf-8")
+
 		if "headers" in kwargs:
-			headers.update(kwargs["headers"])
+			self.headers.update(kwargs["headers"])
 
 		try:
 			response = self._conn_pool.request(*args, **kwargs)
@@ -167,11 +176,6 @@ class Request(object):
 		:param timeout:
 		:return:
 		"""
-		options = {}
-
-		if timeout is not None:
-			options["timeout"] = Timeout(read=timeout, connect=self._connect_timeout)
-
 		if payload is None:
 			payload = {}
 
@@ -213,17 +217,17 @@ class Request(object):
 				Methods.POST,
 				url,
 				fields=payload,
-				**options
+				timeout=timeout
 			)
 		else:
 			result = self.wrapper(
 				Methods.POST,
 				url,
-				body=json.dumps(payload).encode("utf-8"),
+				body=payload,
 				headers={
 					"Content-Type": "application/json"
 				},
-				**options,
+				timeout=timeout
 			)
 
 		return self.parse(result)
