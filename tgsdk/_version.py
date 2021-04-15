@@ -3,4 +3,4 @@
 
 # Copyright (c) 2015-2021 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-__version__ = "1.0.6"
+__version__ = "1.0.12"

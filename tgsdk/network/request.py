@@ -8,6 +8,7 @@ try:
 except ImportError:
 	import json
 
+import platform
 import socket
 from typing import (
 	Union,
@@ -16,7 +17,7 @@ from typing import (
 
 import certifi
 import urllib3
-from urllib3.connection import HTTPConnection
+from urllib3.connection import HTTPSConnection
 
 from tgsdk import (
 	InputFile,
@@ -53,9 +54,9 @@ class Request(object):
 
 	def __init__(
 		self,
-		conn_pool_size: int = 10,
-		connect_timeout: float = 10,
-		read_timeout: float = 5
+		conn_pool_size: int = 1,
+		connect_timeout: float = 5.0,
+		read_timeout: float = 3.0
 	):
 		self._conn_pool_size = conn_pool_size
 		self._connect_timeout = connect_timeout
@@ -64,26 +65,33 @@ class Request(object):
 		self.headers = {
 			"Server": Headers.SERVER,
 			"User-Agent": Headers.USER_AGENT,
-			"Connection": Headers.CONNECTION
+			"connection": Headers.CONNECTION
 		}
 
-		socket_options = HTTPConnection.default_socket_options + [
+		socket_options = HTTPSConnection.default_socket_options + [
 			(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
 		]
+
+		_platform = platform.system().lower()
+		if _platform == "linux":
+			socket_options.append((socket.IPPROTO_TCP, socket.TCP_KEEPIDLE, 90))
+			socket_options.append((socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, 30))
+			socket_options.append((socket.IPPROTO_TCP, socket.TCP_KEEPCNT, 3))
+
 		pool_timeout = urllib3.Timeout(
 			connect=self._connect_timeout,
 			read=self._read_timeout,
-			total=None
+			total=None,
 		)
 
 		kwargs = dict(
-			host="api.telegram.org",
+			# host="api.telegram.org",
 			maxsize=self._conn_pool_size,
 			cert_reqs="CERT_REQUIRED",
 			ca_certs=certifi.where(),
 			socket_options=socket_options,
 			timeout=pool_timeout,
-			headers=self.headers
+			# headers=self.headers
 		)
 
 		self._conn_pool = urllib3.PoolManager(**kwargs)
@@ -134,6 +142,8 @@ class Request(object):
 		if "headers" in kwargs:
 			self.headers.update(kwargs["headers"])
 
+		kwargs["headers"] = self.headers
+
 		try:
 			response = self._conn_pool.request(*args, **kwargs)
 		except urllib3.exceptions.TimeoutError:
@@ -168,14 +178,20 @@ class Request(object):
 
 		raise NetworkError("(%s) %s" % (response.status, error_message))
 
-	def post(self, url: str, payload: Dict, timeout: float = None) -> Union[Dict, bool]:
+	def post(self, url: str, payload: Dict, timeout: float = 5.0) -> Union[Dict, bool]:
 		"""
 
-		:param url:
-		:param payload:
-		:param timeout:
+		:param str url:
+		:param dict payload:
+		:param float timeout:
 		:return:
 		"""
+		if timeout is not None:
+			timeout = urllib3.Timeout(
+				read=timeout,
+				connect=self._connect_timeout
+			)
+
 		if payload is None:
 			payload = {}
 
