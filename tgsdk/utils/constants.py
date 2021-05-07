@@ -22,6 +22,8 @@ CHAT_ACTION_UPLOAD_DOCUMENT = "upload_document"
 CHAT_ACTION_UPLOAD_VIDEO_NOTE = "upload_video_note"
 CHAT_ACTION_RECORD_VIDEO_NOTE = "record_video_note"
 CHAT_ACTION_FIND_LOCATION = "find_location"
+CHAT_ACTION_RECORD_VOICE = "record_voice"
+CHAT_ACTION_UPLOAD_VOICE = "upload_voice"
 
 CHAT_MEMBER_CREATOR = "creator"
 CHAT_MEMBER_ADMINISTRATOR = "administrator"
