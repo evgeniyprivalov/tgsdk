@@ -22,7 +22,8 @@ class ChatMember(TelegramEntity):
 	__slots__ = (
 		"user", "status", "custom_title", "is_anonymous", "can_be_edited", "can_post_messages", "can_edit_messages", "can_delete_messages",
 		"can_restrict_members", "can_promote_members", "can_change_info", "can_invite_users", "can_pin_messages", "is_member", "can_send_messages",
-		"can_send_media_messages", "can_send_polls", "can_send_other_messages", "can_add_web_page_previews", "until_date"
+		"can_send_media_messages", "can_send_polls", "can_send_other_messages", "can_add_web_page_previews", "until_date", "can_manage_voice_chats",
+		"can_manage_chat",
 	)
 
 	CHAT_MEMBER_CREATOR = constants.CHAT_MEMBER_CREATOR  # type: str
@@ -39,9 +40,11 @@ class ChatMember(TelegramEntity):
 		custom_title: str = None,
 		is_anonymous: bool = None,
 		can_be_edited: bool = None,
+		can_manage_chat: bool = None,
 		can_post_messages: bool = None,
 		can_edit_messages: bool = None,
 		can_delete_messages: bool = None,
+		can_manage_voice_chats: bool = None,
 		can_restrict_members: bool = None,
 		can_promote_members: bool = None,
 		can_change_info: bool = None,
@@ -60,9 +63,11 @@ class ChatMember(TelegramEntity):
 		self.custom_title = custom_title
 		self.is_anonymous = is_anonymous
 		self.can_be_edited = can_be_edited
+		self.can_manage_chat = can_manage_chat
 		self.can_post_messages = can_post_messages
 		self.can_edit_messages = can_edit_messages
 		self.can_delete_messages = can_delete_messages
+		self.can_manage_voice_chats = can_manage_voice_chats
 		self.can_restrict_members = can_restrict_members
 		self.can_promote_members = can_promote_members
 		self.can_change_info = can_change_info
