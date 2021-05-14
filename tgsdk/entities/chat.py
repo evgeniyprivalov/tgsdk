@@ -3,7 +3,10 @@
 
 # Copyright (c) 2015-2021 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import TYPE_CHECKING
+from typing import (
+	TYPE_CHECKING,
+	Any
+)
 
 from tgsdk import (
 	ChatPhoto,
@@ -25,7 +28,7 @@ class Chat(TelegramEntity):
 	__slots__ = (
 		"id", "type", "title", "username", "first_name", "last_name", "photo", "bio", "description", "invite_link",
 		"pinned_message", "permissions", "slow_mode_delay", "message_auto_delete_time", "sticker_set_name",
-		"can_set_sticker_set", "linked_chat_id", "location"
+		"can_set_sticker_set", "linked_chat_id", "location", "all_members_are_administrators"
 	)
 
 	PRIVATE = constants.CHAT_PRIVATE  # type: str
@@ -52,7 +55,8 @@ class Chat(TelegramEntity):
 		sticker_set_name: str = None,
 		can_set_sticker_set: bool = None,
 		linked_chat_id: int = None,
-		location: ChatLocation = None
+		location: ChatLocation = None,
+		**_kwargs: Any
 	):
 		self.id = id
 		self.type = type
@@ -72,6 +76,9 @@ class Chat(TelegramEntity):
 		self.can_set_sticker_set = can_set_sticker_set
 		self.linked_chat_id = linked_chat_id
 		self.location = location
+
+		# TODO:
+		self.all_members_are_administrators = _kwargs.get("all_members_are_administrators")
 
 	def is_private(self) -> bool:
 		return self.type == self.PRIVATE
