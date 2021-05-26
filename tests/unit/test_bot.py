@@ -3,11 +3,18 @@
 
 # Copyright (c) 2015-2021 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+try:
+	import ujson as json
+except ImportError:
+	import json
+
 import time
-import pytest
-from tgsdk import Bot, Location, Contact
+
+from tgsdk import (
+	Bot,
+	User
+)
 from tgsdk.network.request import Request
-from tgsdk import InputMediaPhoto, ChatAction
 from .constants import TestValues
 
 
@@ -17,18 +24,27 @@ def test__bot__init():
 	assert _.token == TestValues.BOT_API_TOKEN
 	assert _.base_url == "https://api.telegram.org/bot%s" % TestValues.BOT_API_TOKEN
 	assert _.base_file_url == "https://api.telegram.org/file/bot%s" % TestValues.BOT_API_TOKEN
-	assert _._me is None
 
 	assert isinstance(_.request, Request)
 
-	# TODO:
-	assert _._me.id == TestValues.BOT_ID
-	assert _._me.first_name == TestValues.BOT_FIRST_NAME
-	assert _._me.username == TestValues.BOT_USERNAME
-	assert _.link == "https://t.me/%s" % TestValues.BOT_USERNAME
-	assert _.tg_link == "tg://resolve?domain=%s" % TestValues.BOT_USERNAME
+	assert _._me is None
 
-	assert _.to_dict() == {"id": TestValues.BOT_ID, "username": TestValues.BOT_USERNAME, "first_name": TestValues.BOT_FIRST_NAME}
+	assert _.to_dict() == {
+		"id": TestValues.BOT_ID,
+		"username": TestValues.BOT_USERNAME,
+		"first_name": TestValues.BOT_FIRST_NAME
+	}
+	assert _.me is not None
+	assert isinstance(_.me, User)
+	assert _.me.id == TestValues.BOT_ID
+	assert _.me.username == TestValues.BOT_USERNAME
+	assert _.me.first_name == TestValues.BOT_FIRST_NAME
+
+	assert json.loads(_.to_json()) == {
+		"id": TestValues.BOT_ID,
+		"username": TestValues.BOT_USERNAME,
+		"first_name": TestValues.BOT_FIRST_NAME
+	}
 
 
 def test__bot__init__with_urls():
@@ -45,14 +61,59 @@ def test__bot__init__with_urls():
 
 	assert isinstance(_.request, Request)
 
-	# TODO:
-	assert _._me.id == TestValues.BOT_ID
-	assert _._me.first_name == TestValues.BOT_FIRST_NAME
-	assert _._me.username == TestValues.BOT_USERNAME
+	assert _._me is None
+
+	assert _.to_dict() == {
+		"id": TestValues.BOT_ID,
+		"username": TestValues.BOT_USERNAME,
+		"first_name": TestValues.BOT_FIRST_NAME
+	}
+	assert _.me is not None
+	assert isinstance(_.me, User)
+	assert _.me.id == TestValues.BOT_ID
+	assert _.me.username == TestValues.BOT_USERNAME
+	assert _.me.first_name == TestValues.BOT_FIRST_NAME
+
+	assert json.loads(_.to_json()) == {
+		"id": TestValues.BOT_ID,
+		"username": TestValues.BOT_USERNAME,
+		"first_name": TestValues.BOT_FIRST_NAME
+	}
+
+
+def test__bot__init__get_me():
+	_ = Bot(
+		token=TestValues.BOT_API_TOKEN,
+		base_url="https://api.telegram.org/bot",
+		base_file_url="https://api.telegram.org/file/bot"
+	)
+
+	assert _.token == TestValues.BOT_API_TOKEN
+	assert _.base_url == "https://api.telegram.org/bot%s" % TestValues.BOT_API_TOKEN
+	assert _.base_file_url == "https://api.telegram.org/file/bot%s" % TestValues.BOT_API_TOKEN
+	assert _._me is None
+
+	assert isinstance(_.request, Request)
+
+	assert _.me.id == TestValues.BOT_ID
+	assert _.me.first_name == TestValues.BOT_FIRST_NAME
+	assert _.me.username == TestValues.BOT_USERNAME
+	assert isinstance(_._me, User)
+
 	assert _.link == "https://t.me/%s" % TestValues.BOT_USERNAME
 	assert _.tg_link == "tg://resolve?domain=%s" % TestValues.BOT_USERNAME
 
-	assert _.to_dict() == {"id": TestValues.BOT_ID, "username": TestValues.BOT_USERNAME, "first_name": TestValues.BOT_FIRST_NAME}
+	assert _.to_dict() == {
+		"id": TestValues.BOT_ID,
+		"username": TestValues.BOT_USERNAME,
+		"first_name": TestValues.BOT_FIRST_NAME
+	}
+	assert json.loads(_.to_json()) == {
+		"id": TestValues.BOT_ID,
+		"username": TestValues.BOT_USERNAME,
+		"first_name": TestValues.BOT_FIRST_NAME
+	}
+
 
 
 def test__bot__get_me():
@@ -143,10 +204,8 @@ def test__bot__webhook():
 	assert result.last_error_date is None
 	assert result.last_error_message is None
 
-
 	result = _.delete_webhook()
 	assert result is True
-
 
 #
 
@@ -189,7 +248,6 @@ def test__bot__webhook():
 
 # result = bot.get_file(file_id="AgACAgQAAxkDAAEO841gFJBqYq5E0xS8-iuSTKNwj4768QACyKsxG9-VrVAAAQPEWh2UBDA0I9knXQADAQADAgADeQADz7sEAAEeBA")
 # print(result)
-
 
 
 # result = bot.get_my_commands()

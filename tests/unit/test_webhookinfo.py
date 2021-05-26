@@ -86,3 +86,17 @@ def test__webhookinfo__de_json__data_is_none():
 	_ = WebhookInfo.de_json(data)
 
 	assert _ is None
+
+
+def test__webhookinfo__methods():
+	_ = WebhookInfo(
+		url="https://domain.com",
+		has_custom_certificate=False,
+		pending_update_count=0
+	)
+
+	assert _.is_url_equal("https://domain.com") is True
+	assert _.is_domain_equal("domain.com") is True
+
+	assert _.is_url_equal("https://domain.com/random") is False
+	assert _.is_domain_equal("example.com") is False

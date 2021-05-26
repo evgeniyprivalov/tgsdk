@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2021 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Any
+
 from tgsdk import TelegramEntity
 
 
@@ -28,6 +30,7 @@ class User(TelegramEntity):
 		can_join_groups: bool = None,
 		can_read_all_group_messages: bool = None,
 		supports_inline_queries: bool = None,
+		**_kwargs: Any
 	):
 		self.id = int(id)
 		self.first_name = first_name

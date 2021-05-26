@@ -4,6 +4,7 @@
 # Copyright (c) 2015-2021 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from typing import (
+	Any,
 	Union,
 	List
 )
@@ -30,7 +31,8 @@ class InputMediaAudio(InputMedia):
 		duration: int = None,
 		performer: int = None,
 		title: str = None,
-		file_name: str = None
+		file_name: str = None,
+		**_kwargs: Any
 	):
 		super().__init__(
 			type="audio",

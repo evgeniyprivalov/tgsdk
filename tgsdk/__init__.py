@@ -49,6 +49,12 @@ from .entities.payments.invoice import Invoice
 from .entities.payments.shippingaddress import ShippingAddress
 from .entities.payments.orderinfo import OrderInfo
 from .entities.payments.successfulpayment import SuccessfulPayment
+from .entities.payments.answerprecheckoutquery import AnswerPreCheckoutQuery
+from .entities.payments.labeledprice import LabeledPrice
+from .entities.payments.shippingoption import ShippingOption
+from .entities.payments.answershippingquery import AnswerShippingQuery
+from .entities.payments.precheckoutquery import PreCheckoutQuery
+from .entities.payments.shippingquery import ShippingQuery
 
 # PASSPORT
 from .entities.passport.passportfile import PassportFile

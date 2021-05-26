@@ -60,7 +60,6 @@ def test__document__de_json():
 		"file_unique_id": "file_unique_id"
 	}
 
-
 	_ = Document.de_json(data)
 
 	assert isinstance(_, Document) is True

@@ -1,8 +1,14 @@
 #!/bin/zsh
 
+export VERSION=""
+export COMMENT=""
+
 git add .
-git commit -m "Update"
+git commit -m $COMMENT
 git push -u origin main
+
+git tag -a $VERSION -m $COMMENT
+git push origin $VERSION
 
 
 # Build package

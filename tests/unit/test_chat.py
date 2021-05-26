@@ -100,3 +100,35 @@ def test__chat__de_json__data_is_none():
 	_ = Chat.de_json(data)
 
 	assert _ is None
+
+
+def test__chat__types_methods():
+	data = {
+		"id": 123,
+		"type": "group",
+		"title": "title"
+	}
+
+	_ = Chat.de_json(data)  # type: Chat
+	assert _.is_private() is False
+	assert _.is_channel() is False
+	assert _.is_group() is True
+	assert _.is_supergroup() is False
+
+	_.type = Chat.PRIVATE
+	assert _.is_private() is True
+	assert _.is_channel() is False
+	assert _.is_group() is False
+	assert _.is_supergroup() is False
+
+	_.type = Chat.CHAT_CHANNEL
+	assert _.is_private() is False
+	assert _.is_channel() is True
+	assert _.is_group() is False
+	assert _.is_supergroup() is False
+
+	_.type = Chat.CHAT_SUPERGROUP
+	assert _.is_private() is False
+	assert _.is_channel() is False
+	assert _.is_group() is False
+	assert _.is_supergroup() is True

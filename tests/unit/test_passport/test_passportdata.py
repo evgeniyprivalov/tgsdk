@@ -6,7 +6,11 @@
 import json
 import unittest
 
-from tgsdk import PassportData, EncryptedPassportElement, EncryptedCredentials
+from tgsdk import (
+	PassportData,
+	EncryptedPassportElement,
+	EncryptedCredentials
+)
 
 
 def test__passportdata__init():
@@ -77,6 +81,7 @@ def test__passportdata__to_dict():
 			}
 		}
 	)
+
 
 def test__passportdata__to_dict__with_empty_value():
 	_ = PassportData(

@@ -72,7 +72,6 @@ def test__videonote__de_json():
 		"duration": 10
 	}
 
-
 	_ = VideoNote.de_json(data)
 
 	assert isinstance(_, VideoNote) is True
