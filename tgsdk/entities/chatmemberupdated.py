@@ -4,6 +4,7 @@
 # Copyright (c) 2015-2021 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from typing import (
+	Any,
 	Optional,
 	Dict
 )
@@ -32,7 +33,8 @@ class ChatMemberUpdated(TelegramEntity):
 		date: int,
 		old_chat_member: ChatMember,
 		new_chat_member: ChatMember,
-		invite_link: ChatInviteLink = None
+		invite_link: ChatInviteLink = None,
+		**_kwargs: Any
 	):
 		self.chat = chat
 		self.from_user = from_user
@@ -46,10 +48,10 @@ class ChatMemberUpdated(TelegramEntity):
 		if not data:
 			return None
 
-		data["chat"] = User.de_json(data.get("chat"))
+		data["chat"] = Chat.de_json(data.get("chat"))
 		data["from_user"] = User.de_json(data.get("from"))
-		data["old_chat_member"] = User.de_json(data.get("old_chat_member"))
-		data["new_chat_member"] = User.de_json(data.get("new_chat_member"))
-		data["invite_link"] = User.de_json(data.get("invite_link"))
+		data["old_chat_member"] = ChatMember.de_json(data.get("old_chat_member"))
+		data["new_chat_member"] = ChatMember.de_json(data.get("new_chat_member"))
+		data["invite_link"] = ChatInviteLink.de_json(data.get("invite_link"))
 
 		return cls(**data)

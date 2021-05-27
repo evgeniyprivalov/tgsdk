@@ -81,7 +81,6 @@ def test__video__de_json():
 		"duration": 10
 	}
 
-
 	_ = Video.de_json(data)
 
 	assert isinstance(_, Video) is True

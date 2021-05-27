@@ -4,6 +4,7 @@
 # Copyright (c) 2015-2021 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from typing import (
+	Any,
 	TYPE_CHECKING,
 	Tuple,
 	Union,
@@ -64,7 +65,9 @@ class Bot(TelegramEntity):
 		self,
 		token: str,
 		base_url: str = None,
-		base_file_url: str = None
+		base_file_url: str = None,
+
+		**_kwargs: Any
 	):
 
 		self.token = token
@@ -86,47 +89,106 @@ class Bot(TelegramEntity):
 
 	@property
 	def me(self) -> User:
-		if not self.me:
+		"""
+
+		"""
+		if not self._me:
 			self._me = self.get_me()
 
-		return self.me
+		return self._me
+
+	@me.setter
+	def me(self, value):
+		"""
+
+		:param value:
+		"""
+		if not isinstance(value, User):
+			raise ValueError
+
+		self._me = value
 
 	@property
-	def id(self) -> int:
-		return self.me.id
+	def id(self) -> Union[ID, None]:
+		"""
+		Unique ID of the bot
+
+		"""
+		if self.me:
+			return self.me.id
+
+		return None
 
 	@property
-	def first_name(self) -> str:
-		return self.me.first_name
+	def first_name(self) -> Union[str, None]:
+		"""
+		First name of the bot
+
+		"""
+		if self.me:
+			return self.me.first_name
+
+		return None
 
 	@property
-	def username(self) -> str:
-		return self.me.username
+	def username(self) -> Union[str, None]:
+		"""
+		Username of the bot
+
+		"""
+		if self.me:
+			return self.me.username
+
+		return None
 
 	@property
 	def link(self) -> str:
+		"""
+		Default link to bot by service "t.me"
+
+		"""
 		return "https://t.me/%s" % self.username
 
 	@property
 	def tg_link(self) -> str:
+		"""
+		Link to bot by Telegram protocol "tg://"
+
+		"""
 		return "tg://resolve?domain=%s" % self.username
 
-	def to_dict(self) -> Dict:
-		data = {
-			"id": self.id,
-			"username": self.username,
-			"first_name": self.first_name
-		}
+	def to_dict(self) -> Union[Dict, None]:
+		"""
+
+		"""
+		data = None
+
+		if not self.me:
+			self.get_me()
+
+		if self.me:
+			data = {
+				"id": self.id,
+				"username": self.username,
+				"first_name": self.first_name
+			}
 
 		return data
 
 	def _post(
 		self,
 		endpoint: str,
-		payload: Dict = None,
-		timeout: float = None,
-		kwargs: Dict = None
+		payload: Optional[Dict] = None,
+		timeout: Optional[float] = None,
+		kwargs: Optional[Dict] = None
 	) -> Union[Dict, bool, str, None]:
+		"""
+
+		:param str endpoint:
+		:param dict payload: (Optional)
+		:param float timeout: (Optional)
+		:param dict kwargs: (Optional)
+		"""
 		if not payload:
 			payload = {}
 
@@ -150,14 +212,14 @@ class Bot(TelegramEntity):
 	) -> Union[bool, Message]:
 		"""
 
-		:param endpoint:
-		:param payload:
-		:param allow_sending_without_reply:
-		:param reply_to_message_id:
-		:param disable_notification:
-		:param reply_markup:
-		:param timeout:
-		:param kwargs:
+		:param str endpoint:
+		:param dict payload:
+		:param bool allow_sending_without_reply:
+		:param ID reply_to_message_id:
+		:param bool disable_notification:
+		:param ReplyMarkup reply_markup:
+		:param float timeout:
+		:param dict kwargs:
 		:return:
 		"""
 		if reply_to_message_id:
@@ -186,7 +248,7 @@ class Bot(TelegramEntity):
 
 		Ex., 1234567890 will be as -1234567890 and "chat_username" will be as "@chat_username" also -1234567890 and "@chat_username" will not be changed
 
-		:param chat_id:
+		:param ID chat_id:
 		:return:
 		"""
 		try:

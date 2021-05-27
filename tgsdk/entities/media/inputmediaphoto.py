@@ -4,6 +4,7 @@
 # Copyright (c) 2015-2021 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from typing import (
+	Any,
 	Union,
 	List
 )
@@ -26,7 +27,8 @@ class InputMediaPhoto(InputMedia):
 		caption: str = None,
 		parse_mode: str = None,
 		caption_entities: List[MessageEntity] = None,
-		file_name: str = None
+		file_name: str = None,
+		**_kwargs: Any
 	):
 		super().__init__(
 			type="photo",

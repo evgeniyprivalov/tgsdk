@@ -97,7 +97,7 @@ def test__inputmediavideo__de_json():
 	_ = InputMediaVideo.de_json(data)
 
 	assert isinstance(_, InputMediaVideo) is True
-	assert _.type == "animation"
+	assert _.type == "video"
 	assert _.caption_entities is None
 
 	assert _.media == "file_id"

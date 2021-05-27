@@ -5,6 +5,7 @@
 
 from pathlib import Path
 from typing import (
+	Any,
 	Union,
 	List,
 	IO
@@ -30,7 +31,8 @@ class InputMediaDocument(InputMedia):
 		parse_mode: str = None,
 		caption_entities: List[MessageEntity] = None,
 		disable_content_type_detection: bool = None,
-		file_name: str = None
+		file_name: str = None,
+		**_kwargs: Any
 	):
 		super().__init__(
 			type="document",

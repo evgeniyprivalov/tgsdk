@@ -39,10 +39,6 @@ def test__constants():
 	assert constants.MAX_MESSAGE_LENGTH == 4096
 	assert constants.MAX_CAPTION_LENGTH == 1024
 
-	assert constants.MAX_FILE_SIZE_DOWNLOAD == 20000000
-	assert constants.MAX_FILE_SIZE_UPLOAD == 50000000
-	assert constants.MAX_PHOTO_SIZE_UPLOAD == 10000000
-
 	assert constants.ALLOWED_TYPE_MESSAGE == "message"
 	assert constants.ALLOWED_TYPE_EDITED_MESSAGE == "edited_message"
 	assert constants.ALLOWED_TYPE_CHANNEL_POST == "channel_post"

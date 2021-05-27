@@ -70,7 +70,6 @@ def test__contact__de_json():
 		"user_id": "12345"
 	}
 
-
 	_ = Contact.de_json(data)
 
 	assert isinstance(_, Contact) is True
