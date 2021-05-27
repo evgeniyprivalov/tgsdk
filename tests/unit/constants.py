@@ -8,7 +8,7 @@ from tgsdk.utils.types import ID
 
 
 class TestValues:
-	USER_CHAT_ID = ""  # type: ID # Paste user tg id
+	USER_CHAT_ID = int(os.environ["USER_CHAT_ID"])  # type: ID # Paste user tg id
 
 	BOT_ID = int(os.environ["BOT_ID"])
 	BOT_USERNAME = os.environ["BOT_USERNAME"]

@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2021 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+import os
+
 try:
 	import ujson as json
 except ImportError:
@@ -11,9 +13,20 @@ except ImportError:
 import time
 
 from tgsdk import (
+	InlineKeyboardButton,
+	InlineKeyboardMarkup,
+	ReplyKeyboardRemove,
+	KeyboardButton,
+	ReplyKeyboardMarkup,
+	ParseMode,
+	PhotoSize,
+	MessageEntity,
+	Message,
+	Chat,
 	Bot,
 	User
 )
+from tgsdk.utils.constants import MAX_CAPTION_LENGTH, MAX_MESSAGE_LENGTH
 from tgsdk.network.request import Request
 from .constants import TestValues
 
@@ -114,8 +127,6 @@ def test__bot__init__get_me():
 		"first_name": TestValues.BOT_FIRST_NAME
 	}
 
-
-
 def test__bot__get_me():
 	_ = Bot(token=TestValues.BOT_API_TOKEN)
 
@@ -207,358 +218,160 @@ def test__bot__webhook():
 	result = _.delete_webhook()
 	assert result is True
 
-#
-
-# result = bot.send_media_group(
-# 	chat_id=1031684366,
-# 	media=[
-# 		InputMediaPhoto(
-# 			media="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MjZ8fHNwYWNleHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
-# 			caption="MEDIA URL"
-# 		)
-# 	]
-# )
-# print(result)
-
-
-# result = bot.send_media_group(
-# 	chat_id=1031684366,
-# 	media=[
-# 		InputMediaPhoto(
-# 			media="AgACAgQAAxkDAAEO841gFJBqYq5E0xS8-iuSTKNwj4768QACyKsxG9-VrVAAAQPEWh2UBDA0I9knXQADAQADAgADeQADz7sEAAEeBA",
-# 			caption="MEDIA FILE ID"
-# 		)
-# 	]
-# )
-# print(result)
-
-
-# file = open("../data/img.jpeg", "rb")
-# result = bot.send_media_group(
-# 	chat_id=1031684366,
-# 	media=[
-# 		InputMediaPhoto(
-# 			media=file,
-# 			caption="MEDIA LOCAL FILE"
-# 		)
-# 	]
-# )
-# print(result)
-
-
-# result = bot.get_file(file_id="AgACAgQAAxkDAAEO841gFJBqYq5E0xS8-iuSTKNwj4768QACyKsxG9-VrVAAAQPEWh2UBDA0I9knXQADAQADAgADeQADz7sEAAEeBA")
-# print(result)
-
-
-# result = bot.get_my_commands()
-# print(result)
-
-
-# result = bot.send_chat_action(
-# 	chat_id=1031684366,
-# 	action=ChatAction.TYPING
-# )
-# print(result)
-
-
-# result = bot.send_photo(
-# 	chat_id=1031684366,
-# 	photo="https://c.files.bbci.co.uk/D810/production/_112421355_ifat-with-metadata-1.jpg",
-# 	caption="PHOTO URL"
-# )
-# print(result)
-
-
-# result = bot.send_photo(
-# 	chat_id=1031684366,
-# 	photo="AgACAgQAAxkDAAEO841gFJBqYq5E0xS8-iuSTKNwj4768QACyKsxG9-VrVAAAQPEWh2UBDA0I9knXQADAQADAgADeQADz7sEAAEeBA",
-# 	caption="PHOTO FILE ID"
-# )
-# print(result)
-
-
-# file = open("../data/img2.jpg", "rb")
-# result = bot.send_photo(
-# 	chat_id=1031684366,
-# 	photo=file,
-# 	caption="PHOTO LOCAL FILE"
-# )
-# print(result)
-
-
-# result = bot.set_my_commands(
-# 	commands=[
-# 		(
-# 			"/start",
-# 			"Перезапуск бота"
-# 		)
-# 	]
-# )
-# print(result)
-
-
-# result = bot.send_contact(
-# 	chat_id="1031684366",
-# 	phone_number="76665554433",
-# 	first_name="First Name"
-# )
-# print(result)
-
-
-# result = bot.send_contact(
-# 	chat_id="1031684366",
-# 	contact=Contact(
-# 		phone_number="+76665554433",
-# 		first_name="First Name Contact"
-# 	)
-# )
-# print(result)
-
-
-# result = bot.send_location(
-# 	chat_id=1031684366,
-# 	latitude=50,
-# 	longitude=30
-# )
-# print(result)
-
-
-# result = bot.send_location(
-# 	chat_id=1031684366,
-# 	location=Location(
-# 		latitude=50,
-# 		longitude=30
-# 	)
-# )
-# print(result)
-
-
-# result = bot.send_document(
-# 	chat_id=1031684366,
-# 	document="https://planetpdf.com/planetpdf/pdfs/pdf_tmpl.pdf",
-# 	caption="DOCUMENT URL"
-# )
-# print(result)
-
-
-# result = bot.send_document(
-# 	chat_id=1031684366,
-# 	document="BQACAgQAAxkDAAEO86NgFRyoLqB0yTfKMsoUcz0aMHETsAAChAIAAvGwrFD57OPd7lDGLx4E",
-# 	caption="DOCUMENT FILE ID"
-# )
-# print(result)
-
-
-# file = open("../data/pdf.pdf", "rb")
-# result = bot.send_document(
-# 	chat_id=1031684366,
-# 	document=file,
-# 	caption="DOCUMENT LOCAL FILE"
-# )
-# print(result)
-
-
-# result = bot.send_audio(
-# 	chat_id=1031684366,
-# 	audio="https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3",
-# 	caption="AUDIO URL"
-# )
-# print(result)
-
-
-# result = bot.send_audio(
-# 	chat_id=1031684366,
-# 	audio="CQACAgQAAxkDAAEO86ZgFR2mP2z3vjVy5rdB-IJD9gr8swACXwIAAltDRFBVXDhbwMwrwR4E",
-# 	caption="AUDIO FILE ID"
-# )
-# print(result)
-
-
-# file = open("../data/mp3.mp3", "rb")
-# result = bot.send_audio(
-# 	chat_id=1031684366,
-# 	audio=file,
-# 	caption="AUDIO LOCAL FILE"
-# )
-# print(result)
-
-
-# result = bot.send_video(
-# 	chat_id=1031684366,
-# 	video="https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",
-# 	caption="VIDEO URL"
-# )
-# print(result)
-
-
-# result = bot.send_video(
-# 	chat_id=1031684366,
-# 	video="BAACAgQAAxkDAAEO86pgFR6mFN7s8zraoRrgmHatC-c3xQACTQIAAknVLFPQKja5jtZtnB4E",
-# 	caption="VIDEO FILE ID"
-# )
-# print(result)
-
-
-# file = open("../data/mp4.mp4", "rb")
-# result = bot.send_video(
-# 	chat_id=1031684366,
-# 	video=file,
-# 	caption="VIDEO LOCAL FILE"
-# )
-# print(result)
-
-
-# result = bot.send_voice(
-# 	chat_id=1031684366,
-# 	voice="https://file-examples-com.github.io/uploads/2017/11/file_example_OOG_1MG.ogg",
-# 	caption="VOICE URL"
-# )
-# print(result)
-
-
-# result = bot.send_voice(
-# 	chat_id=1031684366,
-# 	voice="AwACAgIAAxkDAAEO869gFR9i8Hl5plwzlZ5SNYxLaXimEgACagwAAkTvqEgzjfWu0U6AyR4E",
-# 	caption="VOICE FILE ID"
-# )
-# print(result)
-
-
-# file = open("../data/ogg.ogg", "rb")
-# result = bot.send_voice(
-# 	chat_id=1031684366,
-# 	voice=file,
-# 	caption="VOICE LOCAL FILE"
-# )
-# print(result)
-
-
-# # KEYBOARDS
-# from tgsdk import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton, LoginUrl
-
-# bot.send_message(
-# 	chat_id=1031684366,
-# 	text="ReplyMarkup",
-# 	reply_markup=ReplyKeyboardMarkup(keyboard=[
-# 		[
-# 			"Top 1.1", "Top 1.2"
-# 		],
-# 		[
-# 			"Bottom 1.1"
-# 		],
-# 	], resize_keyboard=True)
-# )
-
-
-# result = bot.send_message(
-# 	chat_id=1031684366,
-# 	text="Inline Keyboard",
-# 	reply_markup=InlineKeyboardMarkup(
-# 		inline_keyboard=[
-# 			[
-# 				InlineKeyboardButton(
-# 					text="Callback",
-# 					callback_data="callback"
-# 				)
-# 			],
-# 			[
-# 				InlineKeyboardButton(
-# 					text="URL",
-# 					url="https://google.com"
-# 				)
-# 			],
-# 			[
-# 				InlineKeyboardButton(
-# 					text="Login URL",
-# 					login_url=LoginUrl(
-# 						url="https://app.botmaker.co/login"
-# 					)
-# 				)
-# 			],
-# 			[
-# 				InlineKeyboardButton(
-# 					text="Switch",
-# 					switch_inline_query="Switch inline"
-# 				)
-# 			],
-# 			[
-# 				InlineKeyboardButton(
-# 					text="Switch current Chat",
-# 					switch_inline_query_current_chat="Switch Current Chat"
-# 				)
-# 			]
-# 		]
-# 	)
-# )
-# print(result)
-
-
-# result = bot.copy_message(
-# 	chat_id="1031684366",
-# 	from_chat_id="1031684366",
-# 	message_id=979907
-# )
-# print(result)
-
-
-# result = bot.get_chat(
-# 	chat_id="1001193605030"
-# )
-# print(result)
-
-
-# result = bot.get_chat(
-# 	chat_id="-1001193605030"
-# )
-# print(result)
-
-
-# result = bot.get_chat(
-# 	chat_id="@test_chats_1"
-# )
-# print(result)
-
-
-# result = bot.get_chat(
-# 	chat_id="test_chats_1"
-# )
-# print(result)
-
-
-# result = bot.get_chat_member(
-# 	chat_id="test_chats_1",
-# 	user_id="1031684366"
-# )
-# print(result)
-
-
-# result = bot.get_chat_administrators(
-# 	chat_id="test_chats_1",
-# )
-# print(result)
-
-
-# result = bot.get_chat_members_count(
-# 	chat_id="test_chats_1",
-# )
-# print(result)
-
-
-# result = bot.set_chat_title(
-# 	chat_id="test_chats_1",
-# 	title="Channel Subscription"
-# )
-# print(result)
-
-
-# result = bot.set_chat_description(
-# 	chat_id="test_chats_1",
-# 	description="Channel Subscription 1"
-# )
-# print(result)
-
-
-# result = bot.export_chat_invite_link(
-# 	chat_id="test_chats_1",
-# )
-# print(result)
+
+def test__bot__sendMessage():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	result = _.send_message(
+		chat_id=TestValues.USER_CHAT_ID,
+		text="Test 1",
+		disable_web_page_preview=None,
+		parse_mode=ParseMode.HTML,
+		reply_markup=ReplyKeyboardMarkup(
+			keyboard=[
+				[
+					KeyboardButton(
+						text="Button"
+					)
+				]
+			],
+			resize_keyboard=True
+		)
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.chat.id == TestValues.USER_CHAT_ID
+	assert result.chat.type == Chat.PRIVATE
+	assert result.text == "Test 1"
+	assert result.from_user.first_name == TestValues.BOT_FIRST_NAME
+	assert result.from_user.username == TestValues.BOT_USERNAME
+	assert result.from_user.is_bot is True
+	assert result.from_user.id == TestValues.BOT_ID
+	assert result.date is not None
+	assert isinstance(result.date, int) is True
+	assert result.message_id is not None
+	assert isinstance(result.message_id, int) is True
+	assert result.reply_markup is None
+
+	# Long text. More than 4000
+	text = "".join((str(i) for i in range(MAX_MESSAGE_LENGTH + 10)))
+	result = _.send_message(
+		chat_id=TestValues.USER_CHAT_ID,
+		text=text,
+		disable_web_page_preview=None,
+		parse_mode=ParseMode.HTML,
+		reply_markup=ReplyKeyboardMarkup(
+			keyboard=[
+				[
+					KeyboardButton(
+						text="Button"
+					)
+				]
+			],
+			resize_keyboard=True
+		)
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.chat.id == TestValues.USER_CHAT_ID
+	assert result.chat.type == Chat.PRIVATE
+	assert result.text == text[:4096]
+	assert result.from_user.first_name == TestValues.BOT_FIRST_NAME
+	assert result.from_user.username == TestValues.BOT_USERNAME
+	assert result.from_user.is_bot is True
+	assert result.from_user.id == TestValues.BOT_ID
+	assert result.date is not None
+	assert isinstance(result.date, int) is True
+	assert result.message_id is not None
+	assert isinstance(result.message_id, int) is True
+	assert result.reply_markup is None
+
+
+	# With inline
+	result = _.send_message(
+		chat_id=TestValues.USER_CHAT_ID,
+		text="Test 2",
+		disable_web_page_preview=True,
+		reply_markup=InlineKeyboardMarkup(
+			inline_keyboard=[
+				[
+					InlineKeyboardButton(
+						text="Button",
+						callback_data="callback_data"
+					)
+				]
+			]
+		)
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.chat.id == TestValues.USER_CHAT_ID
+	assert result.chat.type == Chat.PRIVATE
+	assert result.text == "Test 2"
+	assert result.from_user.first_name == TestValues.BOT_FIRST_NAME
+	assert result.from_user.username == TestValues.BOT_USERNAME
+	assert result.from_user.is_bot is True
+	assert result.from_user.id == TestValues.BOT_ID
+	assert result.date is not None
+	assert isinstance(result.date, int) is True
+	assert result.message_id is not None
+	assert isinstance(result.message_id, int) is True
+	assert result.reply_markup is not None
+	assert isinstance(result.reply_markup, InlineKeyboardMarkup) is True
+	assert isinstance(result.reply_markup.inline_keyboard[0][0], InlineKeyboardButton) is True
+	assert result.reply_markup.inline_keyboard[0][0].text == "Button"
+	assert result.reply_markup.inline_keyboard[0][0].callback_data == "callback_data"
+
+
+def test__bot__sendPhoto():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	result = _.send_photo(
+		chat_id=TestValues.USER_CHAT_ID,
+		photo=open("./tests/data/img.jpeg", "rb").read(),
+		file_name="img.jpeg",
+		caption="<b>caption</b>",
+		parse_mode=ParseMode.HTML,
+		disable_notification=None
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption == "caption"
+	assert result.caption_entities is not None
+	assert isinstance(result.caption_entities, list)
+	assert isinstance(result.caption_entities[0], MessageEntity)
+	assert result.caption_entities[0].type == "bold"
+	assert result.caption_entities[0].offset == 0
+	assert result.caption_entities[0].length == 7
+	assert isinstance(result.photo, list) is True
+	assert isinstance(result.photo[0], PhotoSize) is True
+
+	# No caption
+	result = _.send_photo(
+		chat_id=TestValues.USER_CHAT_ID,
+		photo=open("./tests/data/img.jpeg", "rb").read(),
+		file_name="img.jpeg"
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption is None
+	assert result.caption_entities == []
+	assert isinstance(result.photo, list) is True
+	assert isinstance(result.photo[0], PhotoSize) is True
+
+	# Caption max length
+	caption = "".join(str(i) for i in range(MAX_CAPTION_LENGTH + 10))
+	result = _.send_photo(
+		chat_id=TestValues.USER_CHAT_ID,
+		photo=open("./tests/data/img.jpeg", "rb").read(),
+		file_name="img.jpeg",
+		caption=caption,
+		parse_mode=None,
+		disable_notification=None
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption == caption[:MAX_CAPTION_LENGTH]
+	assert result.caption_entities == []
+	assert isinstance(result.photo, list) is True
+	assert isinstance(result.photo[0], PhotoSize) is True
