@@ -22,6 +22,15 @@ from tgsdk import (
 	PhotoSize,
 	MessageEntity,
 	Message,
+	Video,
+	Audio,
+	Sticker,
+	Document,
+	Voice,
+	VideoNote,
+	Contact,
+	Location,
+	Venue,
 	Chat,
 	Bot,
 	User
@@ -375,3 +384,442 @@ def test__bot__sendPhoto():
 	assert result.caption_entities == []
 	assert isinstance(result.photo, list) is True
 	assert isinstance(result.photo[0], PhotoSize) is True
+
+
+def test__bot__sendVideo():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	result = _.send_video(
+		chat_id=TestValues.USER_CHAT_ID,
+		video=open("./tests/data/mp4.mp4", "rb").read(),
+		file_name="mp4.mp4",
+		caption="<b>Video caption</b>",
+		parse_mode=ParseMode.HTML,
+		disable_notification=None,
+		width=600,
+		height=600,
+		duration=100,
+		supports_streaming=False
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption == "Video caption"
+	assert result.caption_entities is not None
+	assert isinstance(result.caption_entities, list)
+	assert isinstance(result.caption_entities[0], MessageEntity)
+	assert result.caption_entities[0].type == "bold"
+	assert result.caption_entities[0].offset == 0
+	assert result.caption_entities[0].length == 13
+	assert isinstance(result.video, Video) is True
+	assert result.video.width == 600
+	assert result.video.height == 600
+	assert result.video.duration == 100
+
+	# No caption
+	result = _.send_video(
+		chat_id=TestValues.USER_CHAT_ID,
+		video=open("./tests/data/mp4.mp4", "rb").read(),
+		file_name="mp4.mp4"
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption is None
+	assert result.caption_entities == []
+	assert isinstance(result.video, Video) is True
+
+	# Caption max length
+	caption = "".join(str(i) for i in range(MAX_CAPTION_LENGTH + 10))
+	result = _.send_video(
+		chat_id=TestValues.USER_CHAT_ID,
+		video=open("./tests/data/mp4.mp4", "rb").read(),
+		file_name="mp4.mp4",
+		caption=caption,
+		parse_mode=None,
+		disable_notification=None
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption == caption[:MAX_CAPTION_LENGTH]
+	assert result.caption_entities == []
+	assert isinstance(result.video, Video) is True
+
+	# Just Video
+	result = _.send_video(
+		chat_id=TestValues.USER_CHAT_ID,
+		video=open("./tests/data/mp4.mp4", "rb").read(),
+		file_name="mp4.mp4"
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption is None
+	assert result.caption_entities == []
+	assert isinstance(result.video, Video) is True
+
+	# assert result.video.duration == 126  # From meta  0
+	assert result.video.height == 320  # From meta
+	assert result.video.width == 320  # From meta
+	assert result.video.file_unique_id is not None
+	assert result.video.file_id is not None
+	assert result.video.file_name == "mp4.mp4"
+	assert result.video.file_size == 10546620  # From meta
+	assert result.video.mime_type == "video/mp4"  # From meta
+
+
+def test__bot__sendAudio():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	result = _.send_audio(
+		chat_id=TestValues.USER_CHAT_ID,
+		audio=open("./tests/data/mp3.mp3", "rb").read(),
+		file_name="mp3.mp3",
+		title="Audio 1",
+		performer="Evgeniy Privalov",
+		duration=100,
+		caption="<b>Audio caption</b>",
+		parse_mode=ParseMode.HTML,
+		disable_notification=None
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption == "Audio caption"
+	assert result.caption_entities is not None
+	assert isinstance(result.caption_entities, list)
+	assert isinstance(result.caption_entities[0], MessageEntity)
+	assert result.caption_entities[0].type == "bold"
+	assert result.caption_entities[0].offset == 0
+	assert result.caption_entities[0].length == 13
+
+	assert isinstance(result.audio, Audio) is True
+	assert result.audio.file_id is not None
+	assert result.audio.title == "Audio 1"
+	assert result.audio.duration == 100
+	assert result.audio.performer == "Evgeniy Privalov"
+
+	# No caption
+	result = _.send_audio(
+		chat_id=TestValues.USER_CHAT_ID,
+		audio=open("./tests/data/mp3.mp3", "rb").read(),
+		file_name="mp3.mp3",
+		duration=101,
+		title="Audio 2",
+		performer="Evgeniy Privalov"
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption is None
+	assert result.caption_entities == []
+
+	assert isinstance(result.audio, Audio) is True
+	assert result.audio.file_id is not None
+	assert result.audio.title == "Audio 2"
+	assert result.audio.duration == 101
+	assert result.audio.performer == "Evgeniy Privalov"
+
+	# Caption max length
+	caption = "".join(str(i) for i in range(MAX_CAPTION_LENGTH + 10))
+	result = _.send_audio(
+		chat_id=TestValues.USER_CHAT_ID,
+		audio=open("./tests/data/mp3.mp3", "rb").read(),
+		file_name="mp3.mp3",
+		title="Audio 3",
+		performer="Evgeniy Privalov",
+		duration=102,
+		caption=caption,
+		parse_mode=None,
+		disable_notification=None
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption == caption[:MAX_CAPTION_LENGTH]
+	assert result.caption_entities == []
+
+	assert isinstance(result.audio, Audio) is True
+	assert result.audio.file_id is not None
+	assert result.audio.title == "Audio 3"
+	assert result.audio.duration == 102
+	assert result.audio.performer == "Evgeniy Privalov"
+
+	# Just Audio
+	result = _.send_audio(
+		chat_id=TestValues.USER_CHAT_ID,
+		audio=open("./tests/data/mp3.mp3", "rb").read(),
+		file_name="mp3.mp3"
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption is None
+	assert result.caption_entities == []
+
+	assert isinstance(result.audio, Audio) is True
+	assert result.audio.file_id is not None
+	assert result.audio.title == "Impact Moderato"  # From meta
+	assert result.audio.duration == 27  # From meta
+	assert result.audio.performer == "Kevin MacLeod"  # From meta
+	assert result.audio.file_id is not None
+	assert result.audio.file_name == "mp3.mp3"
+	assert result.audio.file_size == 764176  # From meta
+	assert result.audio.file_unique_id is not None
+	assert result.audio.mime_type == "audio/mpeg"
+
+
+def test__bot__sendVoice():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	result = _.send_voice(
+		chat_id=TestValues.USER_CHAT_ID,
+		voice=open("./tests/data/ogg.ogg", "rb").read(),
+		file_name="ogg.ogg",
+		duration=100,
+		caption="<b>Voice caption</b>",
+		parse_mode=ParseMode.HTML,
+		disable_notification=None
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption == "Voice caption"
+	assert result.caption_entities is not None
+	assert isinstance(result.caption_entities, list)
+	assert isinstance(result.caption_entities[0], MessageEntity)
+	assert result.caption_entities[0].type == "bold"
+	assert result.caption_entities[0].offset == 0
+	assert result.caption_entities[0].length == 13
+
+	assert isinstance(result.voice, Voice) is True
+	assert result.voice.file_id is not None
+
+	# No caption
+	result = _.send_voice(
+		chat_id=TestValues.USER_CHAT_ID,
+		voice=open("./tests/data/ogg.ogg", "rb").read(),
+		file_name="ogg.ogg",
+		duration=101
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption is None
+	assert result.caption_entities == []
+
+	assert isinstance(result.voice, Voice) is True
+	assert result.voice.file_id is not None
+	assert result.voice.duration == 101
+
+	# Caption max length
+	caption = "".join(str(i) for i in range(MAX_CAPTION_LENGTH + 10))
+	result = _.send_voice(
+		chat_id=TestValues.USER_CHAT_ID,
+		voice=open("./tests/data/ogg.ogg", "rb").read(),
+		file_name="ogg.ogg",
+		duration=102,
+		caption=caption,
+		parse_mode=None,
+		disable_notification=None
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption == caption[:MAX_CAPTION_LENGTH]
+	assert result.caption_entities == []
+
+	assert isinstance(result.voice, Voice) is True
+	assert result.voice.file_id is not None
+	assert result.voice.duration == 102
+
+	# Just Audio
+	result = _.send_voice(
+		chat_id=TestValues.USER_CHAT_ID,
+		voice=open("./tests/data/ogg.ogg", "rb").read(),
+		file_name="ogg.ogg"
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption is None
+	assert result.caption_entities == []
+
+	assert isinstance(result.voice, Voice) is True
+	assert result.voice.file_id is not None
+	assert result.voice.file_id is not None
+	assert result.voice.file_size == 1089524  # From meta
+	assert result.voice.file_unique_id is not None
+	assert result.voice.mime_type == "audio/ogg"
+
+
+def test__bot__sendDocument():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	result = _.send_document(
+		chat_id=TestValues.USER_CHAT_ID,
+		document=open("./tests/data/pdf.pdf", "rb").read(),
+		file_name="pdf.pdf",
+		caption="<b>Document caption</b>",
+		parse_mode=ParseMode.HTML,
+		disable_notification=None,
+		disable_content_type_detection=True
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption == "Document caption"
+	assert result.caption_entities is not None
+	assert isinstance(result.caption_entities, list)
+	assert isinstance(result.caption_entities[0], MessageEntity)
+	assert result.caption_entities[0].type == "bold"
+	assert result.caption_entities[0].offset == 0
+	assert result.caption_entities[0].length == 16
+
+	assert isinstance(result.document, Document) is True
+	assert result.document.file_id is not None
+	assert result.document.file_unique_id is not None
+	assert result.document.file_size == 100463  # From meta
+	assert result.document.file_name == "pdf.pdf"
+
+	# No caption
+	result = _.send_document(
+		chat_id=TestValues.USER_CHAT_ID,
+		document=open("./tests/data/pdf.pdf", "rb").read(),
+		file_name="pdf.pdf"
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption is None
+	assert result.caption_entities == []
+
+	assert isinstance(result.document, Document) is True
+	assert result.document.file_id is not None
+
+	# Caption max length
+	caption = "".join(str(i) for i in range(MAX_CAPTION_LENGTH + 10))
+	result = _.send_document(
+		chat_id=TestValues.USER_CHAT_ID,
+		document=open("./tests/data/pdf.pdf", "rb").read(),
+		file_name="pdf.pdf",
+		caption=caption,
+		parse_mode=None,
+		disable_notification=None
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption == caption[:MAX_CAPTION_LENGTH]
+	assert result.caption_entities == []
+
+	assert isinstance(result.document, Document) is True
+	assert result.document.file_id is not None
+
+	# Just Document
+	result = _.send_document(
+		chat_id=TestValues.USER_CHAT_ID,
+		document=open("./tests/data/pdf.pdf", "rb").read(),
+		file_name="pdf.pdf"
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.caption is None
+	assert result.caption_entities == []
+
+	assert isinstance(result.document, Document) is True
+	assert result.document.file_id is not None
+	assert result.document.file_id is not None
+	assert result.document.file_name == "pdf.pdf"
+	assert result.document.file_size == 100463  # From meta
+	assert result.document.file_unique_id is not None
+	assert result.document.mime_type == "application/pdf"
+
+
+def test__bot__sendContact():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	result = _.send_contact(
+		chat_id=TestValues.USER_CHAT_ID,
+		phone_number="76665554433",
+		first_name="Evgeniy",
+		last_name="Privalov"
+	)
+
+	assert isinstance(result, Message) is True
+
+	assert isinstance(result.contact, Contact) is True
+	assert result.contact.user_id is None
+	assert result.contact.phone_number == "76665554433"
+	assert result.contact.first_name == "Evgeniy"
+	assert result.contact.last_name == "Privalov"
+
+	result = _.send_contact(
+		chat_id=TestValues.USER_CHAT_ID,
+		contact=Contact(
+			# user_id=TestValues.USER_CHAT_ID,
+			phone_number="76665554433",
+			first_name="Evgeniy",
+			last_name="Privalov"
+		)
+	)
+
+	assert isinstance(result, Message) is True
+	assert isinstance(result.contact, Contact) is True
+	# assert result.contact.user_id == TestValues.USER_CHAT_ID
+	assert result.contact.user_id is None
+	assert result.contact.phone_number == "76665554433"
+	assert result.contact.first_name == "Evgeniy"
+	assert result.contact.last_name == "Privalov"
+
+
+def test__bot__sendLocation():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	# As LAT - LNG
+	result_1 = _.send_location(
+		chat_id=TestValues.USER_CHAT_ID,
+		latitude=62.098818,
+		longitude=7.191824,
+		reply_markup=ReplyKeyboardMarkup(
+			keyboard=[
+				[
+					KeyboardButton(
+						text="Button"
+					)
+				]
+			],
+			resize_keyboard=True
+		),
+		disable_notification=True,
+		allow_sending_without_reply=True
+	)
+
+	assert isinstance(result_1, Message) is True
+
+	assert isinstance(result_1.location, Location) is True
+	assert result_1.location.latitude == 62.098818
+	assert result_1.location.longitude == 7.191824
+	assert result_1.location.horizontal_accuracy is None
+	assert result_1.location.live_period is None
+	assert result_1.location.heading is None
+	assert result_1.location.proximity_alert_radius is None
+
+	# AS Location Instance
+	result_2 = _.send_location(
+		chat_id=TestValues.USER_CHAT_ID,
+		location=Location(
+			latitude=62.098818,
+			longitude=7.191824
+		),
+		allow_sending_without_reply=True,
+		disable_notification=True,
+		reply_markup=ReplyKeyboardMarkup(
+			keyboard=[
+				[
+					KeyboardButton(
+						text="Button"
+					)
+				]
+			],
+			resize_keyboard=True
+		)
+	)
+
+	assert isinstance(result_2, Message) is True
+
+	assert isinstance(result_2.location, Location) is True
+	assert result_2.location.latitude == 62.098818
+	assert result_2.location.longitude == 7.191824
+	assert result_2.location.horizontal_accuracy is None
+	assert result_2.location.live_period is None
+	assert result_2.location.heading is None
+	assert result_2.location.proximity_alert_radius is None
+
+	# TODO: Live Locations
