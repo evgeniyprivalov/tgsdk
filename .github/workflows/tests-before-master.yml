@@ -49,5 +49,4 @@ jobs:
         run: |
           ls -lah
 
-          cd tests/unit
           pytest --cov=tgsdk tests --cov-report term
