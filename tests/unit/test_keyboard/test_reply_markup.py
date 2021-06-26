@@ -14,7 +14,8 @@ from tgsdk import (
 def test__reply_keyboard_markup__to_dict():
 	_ = ReplyKeyboardMarkup(
 		keyboard=[["Button"]],
-		resize_keyboard=True
+		resize_keyboard=True,
+		input_field_placeholder="INPUT FIELD PLACEHOLDER"
 	)
 
 	unittest.TestCase().assertDictEqual(
@@ -29,6 +30,7 @@ def test__reply_keyboard_markup__to_dict():
 			],
 			"one_time_keyboard": False,
 			"resize_keyboard": True,
+			"input_field_placeholder": "INPUT FIELD PLACEHOLDER",
 			"selective": False
 		}
 	)
@@ -37,7 +39,8 @@ def test__reply_keyboard_markup__to_dict():
 def test__reply_keyboard_markup__to_dict__no_buttons():
 	_ = ReplyKeyboardMarkup(
 		keyboard=[[]],
-		resize_keyboard=True
+		resize_keyboard=True,
+		input_field_placeholder="INPUT FIELD PLACEHOLDER"
 	)
 
 	unittest.TestCase().assertDictEqual(
@@ -46,6 +49,7 @@ def test__reply_keyboard_markup__to_dict__no_buttons():
 			"keyboard": [],
 			"one_time_keyboard": False,
 			"resize_keyboard": True,
+			"input_field_placeholder": "INPUT FIELD PLACEHOLDER",
 			"selective": False
 		}
 	)
@@ -287,5 +291,58 @@ def test_as_instances__with_selective_property():
 			"one_time_keyboard": False,
 			"resize_keyboard": False,
 			"selective": True
+		}
+	)
+
+def test_as_instances__with_input_field_placeholder_property():
+	keyboard = ReplyKeyboardMarkup(
+		keyboard=[
+			[
+				KeyboardButton(
+					text="Button 1"
+				)
+			],
+			[
+				KeyboardButton(
+					text="Request Contact",
+					request_contact=True
+				)
+			],
+			[
+				KeyboardButton(
+					text="Request Location",
+					request_location=True
+				)
+			]
+		],
+		input_field_placeholder="INPUT FIELD PLACEHOLDER"
+	)
+
+	unittest.TestCase().assertDictEqual(
+		keyboard.to_dict(),
+		{
+			"keyboard": [
+				[
+					{
+						"text": "Button 1"
+					}
+				],
+				[
+					{
+						"request_contact": True,
+						"text": "Request Contact"
+					}
+				],
+				[
+					{
+						"request_location": True,
+						"text": "Request Location"
+					}
+				]
+			],
+			"one_time_keyboard": False,
+			"resize_keyboard": False,
+			"input_field_placeholder": "INPUT FIELD PLACEHOLDER",
+			"selective": False
 		}
 	)
