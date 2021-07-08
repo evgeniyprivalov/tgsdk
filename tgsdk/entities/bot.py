@@ -2177,7 +2177,11 @@ class Bot(TelegramEntity):
 	def answer_pre_checkout_query(self):
 		pass
 
-	def get_my_commands(self, timeout: float = None, kwargs: Dict = None) -> List[BotCommand]:
+	def get_my_commands(
+		self,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> List[BotCommand]:
 		"""
 		https://core.telegram.org/bots/api#getmycommands
 
@@ -2189,7 +2193,12 @@ class Bot(TelegramEntity):
 
 		return [BotCommand.de_json(command) for command in _result]
 
-	def set_my_commands(self, commands: List[Union[BotCommand, Tuple[str, str]]], timeout: float = None, kwargs: Dict = None) -> bool:
+	def set_my_commands(
+		self,
+		commands: List[Union[BotCommand, Tuple[str, str]]],
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
 		"""
 		https://core.telegram.org/bots/api#setmycommands
 
