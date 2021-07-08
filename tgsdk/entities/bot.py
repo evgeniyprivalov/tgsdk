@@ -1178,21 +1178,24 @@ class Bot(TelegramEntity):
 
 		return File.de_json(_result)
 
+	# TODO: DEPRECATED
 	def kick_chat_member(
 		self,
 		chat_id: ID,
 		user_id: ID,
 		until_date: int = None,
+		revoke_messages: Optional[bool] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> bool:
 		"""
-		https://core.telegram.org/bots/api#kickchatmember
+		https://core.telegram.org/bots/api#banchatmember
 
-		:param chat_id:
-		:param user_id:
-		:param until_date:
-		:param timeout:
+		:param ID chat_id:
+		:param ID user_id:
+		:param int until_date:
+		:param bool revoke_messages:
+		:param float timeout:
 		:param kwargs:
 		:return:
 		"""
@@ -1204,8 +1207,49 @@ class Bot(TelegramEntity):
 		if until_date:
 			payload["until_date"] = until_date
 
+		if revoke_messages is not None:
+			payload["revoke_messages"] = revoke_messages
+
 		return self._post(
-			"kickChatMember",
+			"banChatMember",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def ban_chat_member(
+		self,
+		chat_id: ID,
+		user_id: ID,
+		until_date: int = None,
+		revoke_messages: Optional[bool] = None,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#banchatmember
+
+		:param ID chat_id:
+		:param ID user_id:
+		:param int until_date:
+		:param bool revoke_messages:
+		:param float timeout:
+		:param kwargs:
+		:return:
+		"""
+		payload = {
+			"chat_id": self.build_chat_id(chat_id=chat_id),
+			"user_id": user_id
+		}
+
+		if until_date:
+			payload["until_date"] = until_date
+
+		if revoke_messages is not None:
+			payload["revoke_messages"] = revoke_messages
+
+		return self._post(
+			"banChatMember",
 			payload,
 			timeout=timeout,
 			kwargs=kwargs
@@ -1637,6 +1681,7 @@ class Bot(TelegramEntity):
 
 		return [ChatMember.de_json(chat_member) for chat_member in _result]
 
+	# TODO: DEPRECATED
 	def get_chat_members_count(
 		self,
 		chat_id: ID,
@@ -1644,7 +1689,7 @@ class Bot(TelegramEntity):
 		kwargs: Dict = None
 	) -> int:
 		"""
-		https://core.telegram.org/bots/api#getchatmemberscount
+		https://core.telegram.org/bots/api#getchatmembercount
 
 		:param chat_id:
 		:param timeout:
@@ -1656,7 +1701,32 @@ class Bot(TelegramEntity):
 		}
 
 		return self._post(
-			"getChatMembersCount",
+			"getChatMemberCount",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def get_chat_member_count(
+		self,
+		chat_id: ID,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> int:
+		"""
+		https://core.telegram.org/bots/api#getchatmembercount
+
+		:param chat_id:
+		:param timeout:
+		:param kwargs:
+		:return:
+		"""
+		payload = {
+			"chat_id": self.build_chat_id(chat_id=chat_id),
+		}
+
+		return self._post(
+			"getChatMemberCount",
 			payload,
 			timeout=timeout,
 			kwargs=kwargs
@@ -2107,7 +2177,11 @@ class Bot(TelegramEntity):
 	def answer_pre_checkout_query(self):
 		pass
 
-	def get_my_commands(self, timeout: float = None, kwargs: Dict = None) -> List[BotCommand]:
+	def get_my_commands(
+		self,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> List[BotCommand]:
 		"""
 		https://core.telegram.org/bots/api#getmycommands
 
@@ -2119,7 +2193,12 @@ class Bot(TelegramEntity):
 
 		return [BotCommand.de_json(command) for command in _result]
 
-	def set_my_commands(self, commands: List[Union[BotCommand, Tuple[str, str]]], timeout: float = None, kwargs: Dict = None) -> bool:
+	def set_my_commands(
+		self,
+		commands: List[Union[BotCommand, Tuple[str, str]]],
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
 		"""
 		https://core.telegram.org/bots/api#setmycommands
 
