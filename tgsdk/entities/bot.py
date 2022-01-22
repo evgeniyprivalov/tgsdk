@@ -284,6 +284,7 @@ class Bot(TelegramEntity):
 		reply_to_message_id: ID = None,
 		disable_web_page_preview: bool = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		allow_sending_without_reply: bool = None,
 		timeout: float = None,
 		kwargs: Dict = None
@@ -298,6 +299,7 @@ class Bot(TelegramEntity):
 		:param reply_to_message_id:
 		:param disable_web_page_preview:
 		:param disable_notification:
+		:param protect_content:
 		:param allow_sending_without_reply:
 		:param timeout:
 		:param kwargs:
@@ -317,6 +319,9 @@ class Bot(TelegramEntity):
 
 		if disable_web_page_preview is not None:
 			payload["disable_web_page_preview"] = disable_web_page_preview
+
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
 
 		return self._send(
 			"sendMessage",
@@ -358,6 +363,7 @@ class Bot(TelegramEntity):
 		from_chat_id: ID,
 		message_id: ID,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -368,6 +374,7 @@ class Bot(TelegramEntity):
 		:param from_chat_id:
 		:param message_id:
 		:param disable_notification:
+		:param protect_content:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -383,6 +390,9 @@ class Bot(TelegramEntity):
 
 		if message_id:
 			payload["message_id"] = message_id
+
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
 
 		return self._send(
 			"forwardMessage",
@@ -401,6 +411,7 @@ class Bot(TelegramEntity):
 		parse_mode: str = None,
 		reply_markup: ReplyMarkup = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
 		timeout: float = None,
@@ -416,6 +427,7 @@ class Bot(TelegramEntity):
 		:param parse_mode:
 		:param reply_markup:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
 		:param timeout:
@@ -446,6 +458,9 @@ class Bot(TelegramEntity):
 		if allow_sending_without_reply is not None:
 			payload["allow_sending_without_reply"] = allow_sending_without_reply
 
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
+
 		if reply_markup:
 			payload["reply_markup"] = reply_markup.to_json()
 
@@ -461,6 +476,7 @@ class Bot(TelegramEntity):
 		parse_mode: str = None,
 		reply_markup: ReplyMarkup = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
 		timeout: float = None,
@@ -476,6 +492,7 @@ class Bot(TelegramEntity):
 		:param parse_mode:
 		:param reply_markup:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
 		:param timeout:
@@ -495,6 +512,9 @@ class Bot(TelegramEntity):
 
 		if parse_mode:
 			payload["parse_mode"] = parse_mode
+
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
 
 		return self._send(
 			"sendPhoto",
@@ -519,6 +539,7 @@ class Bot(TelegramEntity):
 		parse_mode: str = None,
 		reply_markup: ReplyMarkup = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
 		thumb: InputFile = None,
@@ -538,6 +559,7 @@ class Bot(TelegramEntity):
 		:param parse_mode:
 		:param reply_markup:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
 		:param thumb:
@@ -571,6 +593,9 @@ class Bot(TelegramEntity):
 		if thumb:
 			payload["thumb"] = get_input_file(thumb, as_attach=True)
 
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
+
 		return self._send(
 			"sendAudio",
 			payload,
@@ -591,6 +616,7 @@ class Bot(TelegramEntity):
 		parse_mode: str = None,
 		reply_markup: ReplyMarkup = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		disable_content_type_detection: bool = None,
 		allow_sending_without_reply: bool = None,
@@ -608,6 +634,7 @@ class Bot(TelegramEntity):
 		:param parse_mode:
 		:param reply_markup:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param disable_content_type_detection:
 		:param allow_sending_without_reply:
@@ -636,6 +663,9 @@ class Bot(TelegramEntity):
 		if disable_content_type_detection is not None:
 			payload["disable_content_type_detection"] = disable_content_type_detection
 
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
+
 		return self._send(
 			"sendDocument",
 			payload,
@@ -653,6 +683,7 @@ class Bot(TelegramEntity):
 		sticker: Union[FileInput, "Sticker"],
 		reply_markup: ReplyMarkup = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
 		timeout: float = None,
@@ -665,6 +696,7 @@ class Bot(TelegramEntity):
 		:param sticker:
 		:param reply_markup:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
 		:param timeout:
@@ -676,6 +708,9 @@ class Bot(TelegramEntity):
 			"chat_id": chat_id,
 			"sticker": get_input_file(sticker, Sticker)
 		}
+
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
 
 		return self._send(
 			"sendSticker",
@@ -700,6 +735,7 @@ class Bot(TelegramEntity):
 		width: int = None,
 		height: int = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		supports_streaming: bool = None,
 		thumb: InputFile = None,
@@ -720,6 +756,7 @@ class Bot(TelegramEntity):
 		:param width:
 		:param height:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param supports_streaming:
 		:param thumb:
@@ -755,6 +792,9 @@ class Bot(TelegramEntity):
 		if supports_streaming is not None:
 			payload["supports_streaming"] = supports_streaming
 
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
+
 		if thumb:
 			payload["thumb"] = get_input_file(thumb, as_attach=True)
 
@@ -778,6 +818,7 @@ class Bot(TelegramEntity):
 		file_name: str = None,
 		reply_markup: ReplyMarkup = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
 		thumb: InputFile = None,
@@ -794,6 +835,7 @@ class Bot(TelegramEntity):
 		:param file_name:
 		:param reply_markup:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
 		:param thumb:
@@ -814,6 +856,9 @@ class Bot(TelegramEntity):
 
 		if thumb:
 			payload["thumb"] = get_input_file(thumb, as_attach=True)
+
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
 
 		return self._send(
 			"sendVideoNote",
@@ -836,6 +881,7 @@ class Bot(TelegramEntity):
 		reply_markup: ReplyMarkup = None,
 		parse_mode: str = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
 		timeout: float = None,
@@ -852,6 +898,7 @@ class Bot(TelegramEntity):
 		:param reply_markup:
 		:param parse_mode:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
 		:param timeout:
@@ -875,6 +922,9 @@ class Bot(TelegramEntity):
 		if parse_mode:
 			payload["parse_mode"] = parse_mode
 
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
+
 		return self._send(
 			"sendVoice",
 			payload,
@@ -891,6 +941,7 @@ class Bot(TelegramEntity):
 		chat_id: ID,
 		media: List[Union["InputMediaAudio", "InputMediaDocument", "InputMediaPhoto", "InputMediaVideo"]],
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
 		timeout: float = None,
@@ -902,6 +953,7 @@ class Bot(TelegramEntity):
 		:param chat_id:
 		:param media:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
 		:param timeout:
@@ -922,6 +974,9 @@ class Bot(TelegramEntity):
 		if allow_sending_without_reply is not None:
 			payload["allow_sending_without_reply"] = allow_sending_without_reply
 
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
+
 		_result = self._post(
 			"sendMediaGroup",
 			payload,
@@ -938,6 +993,7 @@ class Bot(TelegramEntity):
 		longitude: float = None,
 		reply_markup: ReplyMarkup = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		location: Location = None,
 		live_period: int = None,
@@ -956,6 +1012,7 @@ class Bot(TelegramEntity):
 		:param longitude:
 		:param reply_markup:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param location:
 		:param live_period:
@@ -996,6 +1053,9 @@ class Bot(TelegramEntity):
 		if proximity_alert_radius:
 			payload["proximity_alert_radius"] = proximity_alert_radius
 
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
+
 		return self._send(
 			"sendLocation",
 			payload,
@@ -1023,6 +1083,7 @@ class Bot(TelegramEntity):
 		vcard: str = None,
 		reply_markup: ReplyMarkup = None,
 		disable_notification: bool = None,
+		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
 		timeout: float = None,
@@ -1039,6 +1100,7 @@ class Bot(TelegramEntity):
 		:param vcard:
 		:param reply_markup:
 		:param disable_notification:
+		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
 		:param timeout:
@@ -1063,6 +1125,9 @@ class Bot(TelegramEntity):
 
 		if vcard:
 			payload["vcard"] = vcard
+
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
 
 		return self._send(
 			"sendContact",
