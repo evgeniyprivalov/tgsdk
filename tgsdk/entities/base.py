@@ -10,6 +10,7 @@ except ImportError:
 
 from typing import (
 	TypeVar,
+	Union,
 	List,
 	Type,
 	Optional,
@@ -71,14 +72,14 @@ class TelegramEntity(object):
 		return data
 
 	@classmethod
-	def de_list(cls, data: Dict) -> List[Optional[TelegramEntityType]]:
+	def de_list(cls, data: Dict) -> Union[None, List[Optional[TelegramEntityType]]]:
 		"""
 
 		:param data:
 		:return:
 		"""
 		if not data:
-			return []
+			return None
 
 		return [cls.de_json(_) for _ in data]
 

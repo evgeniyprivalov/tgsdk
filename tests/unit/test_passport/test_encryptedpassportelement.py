@@ -82,11 +82,11 @@ def test__encryptedpassportelement__de_json():
 	assert _.data == "data"
 	assert _.phone_number == "76665554433"
 	assert _.email == "evgeniyprivalov94@gmail.com"
-	assert _.files == []
+	assert _.files == None
 	assert _.front_side is None
 	assert _.reverse_side is None
 	assert _.selfie is None
-	assert _.translation == []
+	assert _.translation == None
 	assert _.hash is None
 
 

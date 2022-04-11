@@ -54,7 +54,7 @@ class Message(TelegramEntity):
 		"animation", "audio", "document", "photo", "bot", "sticker", "video", "video_note", "voice", "caption", "caption_entities", "contact", "venue",
 		"location", "new_chat_members", "left_chat_member", "new_chat_title", "new_chat_photo", "delete_chat_photo", "group_chat_created",
 		"supergroup_chat_created", "channel_chat_created", "migrate_to_chat_id", "migrate_from_chat_id", "pinned_message", "invoice", "successful_payment",
-		"connected_website", "passport_data", "proximity_alert_triggered", "reply_markup"
+		"connected_website", "passport_data", "proximity_alert_triggered", "reply_markup", "has_protected_content"
 	)
 
 	def __init__(
@@ -115,6 +115,7 @@ class Message(TelegramEntity):
 		# voice_chat_ended: VoiceChatEnded = None,
 		# voice_chat_participants_invited: VoiceChatParticipantsInvited = None,
 		reply_markup: InlineKeyboardMarkup = None,
+		has_protected_content: Optional[bool] = None,
 
 		bot: "Bot" = None,
 
@@ -168,6 +169,7 @@ class Message(TelegramEntity):
 		self.passport_data = passport_data
 		self.proximity_alert_triggered = proximity_alert_triggered
 		self.reply_markup = reply_markup
+		self.has_protected_content = has_protected_content
 
 		self.bot = bot
 
