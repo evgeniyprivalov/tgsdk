@@ -364,7 +364,7 @@ def test__bot__sendPhoto():
 
 	assert isinstance(result, Message) is True
 	assert result.caption is None
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 	assert isinstance(result.photo, list) is True
 	assert isinstance(result.photo[0], PhotoSize) is True
 
@@ -381,7 +381,7 @@ def test__bot__sendPhoto():
 
 	assert isinstance(result, Message) is True
 	assert result.caption == caption[:MAX_CAPTION_LENGTH]
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 	assert isinstance(result.photo, list) is True
 	assert isinstance(result.photo[0], PhotoSize) is True
 
@@ -424,7 +424,7 @@ def test__bot__sendVideo():
 
 	assert isinstance(result, Message) is True
 	assert result.caption is None
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 	assert isinstance(result.video, Video) is True
 
 	# Caption max length
@@ -440,7 +440,7 @@ def test__bot__sendVideo():
 
 	assert isinstance(result, Message) is True
 	assert result.caption == caption[:MAX_CAPTION_LENGTH]
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 	assert isinstance(result.video, Video) is True
 
 	# Just Video
@@ -452,7 +452,7 @@ def test__bot__sendVideo():
 
 	assert isinstance(result, Message) is True
 	assert result.caption is None
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 	assert isinstance(result.video, Video) is True
 
 	# assert result.video.duration == 126  # From meta  0
@@ -507,7 +507,7 @@ def test__bot__sendAudio():
 
 	assert isinstance(result, Message) is True
 	assert result.caption is None
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 
 	assert isinstance(result.audio, Audio) is True
 	assert result.audio.file_id is not None
@@ -531,7 +531,7 @@ def test__bot__sendAudio():
 
 	assert isinstance(result, Message) is True
 	assert result.caption == caption[:MAX_CAPTION_LENGTH]
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 
 	assert isinstance(result.audio, Audio) is True
 	assert result.audio.file_id is not None
@@ -548,7 +548,7 @@ def test__bot__sendAudio():
 
 	assert isinstance(result, Message) is True
 	assert result.caption is None
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 
 	assert isinstance(result.audio, Audio) is True
 	assert result.audio.file_id is not None
@@ -597,7 +597,7 @@ def test__bot__sendVoice():
 
 	assert isinstance(result, Message) is True
 	assert result.caption is None
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 
 	assert isinstance(result.voice, Voice) is True
 	assert result.voice.file_id is not None
@@ -617,7 +617,7 @@ def test__bot__sendVoice():
 
 	assert isinstance(result, Message) is True
 	assert result.caption == caption[:MAX_CAPTION_LENGTH]
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 
 	assert isinstance(result.voice, Voice) is True
 	assert result.voice.file_id is not None
@@ -632,7 +632,7 @@ def test__bot__sendVoice():
 
 	assert isinstance(result, Message) is True
 	assert result.caption is None
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 
 	assert isinstance(result.voice, Voice) is True
 	assert result.voice.file_id is not None
@@ -679,7 +679,7 @@ def test__bot__sendDocument():
 
 	assert isinstance(result, Message) is True
 	assert result.caption is None
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 
 	assert isinstance(result.document, Document) is True
 	assert result.document.file_id is not None
@@ -697,7 +697,7 @@ def test__bot__sendDocument():
 
 	assert isinstance(result, Message) is True
 	assert result.caption == caption[:MAX_CAPTION_LENGTH]
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 
 	assert isinstance(result.document, Document) is True
 	assert result.document.file_id is not None
@@ -711,7 +711,7 @@ def test__bot__sendDocument():
 
 	assert isinstance(result, Message) is True
 	assert result.caption is None
-	assert result.caption_entities == []
+	assert result.caption_entities is None
 
 	assert isinstance(result.document, Document) is True
 	assert result.document.file_id is not None

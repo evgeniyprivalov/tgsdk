@@ -7,6 +7,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 - 
 
+## [1.0.22] - 2022-04-11
+### Added
+- Add new field `has_protected_content` to `Message` entity
+### Changed
+- Update method `de_list` of the `TelegramEntity` entity
+- Updates some tests
+### Removed
+
+
 ## [1.0.20] - 2021-06-26
 ### Added
 - Add new method `get_chat_member_count` to `Bot` entity

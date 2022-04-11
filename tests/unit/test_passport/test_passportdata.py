@@ -182,11 +182,11 @@ def test__passportdata__de_json():
 	assert _.data[0].data == "data"
 	assert _.data[0].phone_number == "76665554433"
 	assert _.data[0].email == "evgeniyprivalov94@gmail.com"
-	assert _.data[0].files == []
+	assert _.data[0].files == None
 	assert _.data[0].front_side is None
 	assert _.data[0].reverse_side is None
 	assert _.data[0].selfie is None
-	assert _.data[0].translation == []
+	assert _.data[0].translation == None
 	assert _.data[0].hash is None
 
 	assert _.credentials.data == "data"

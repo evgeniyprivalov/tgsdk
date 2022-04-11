@@ -292,24 +292,24 @@ def test__callbackquery__de_json():
 	assert _.message.edit_date is None
 	assert _.message.media_group_id is None
 	assert _.message.author_signature is None
-	assert _.message.entities == []
+	assert _.message.entities is None
 	assert _.message.animation is None
 	assert _.message.audio is None
 	assert _.message.document is None
-	assert _.message.photo == []
+	assert _.message.photo is None
 	assert _.message.sticker is None
 	assert _.message.video is None
 	assert _.message.video_note is None
 	assert _.message.voice is None
 	assert _.message.caption is None
-	assert _.message.caption_entities == []
+	assert _.message.caption_entities is None
 	assert _.message.contact is None
 	assert _.message.venue is None
 	assert _.message.location is None
-	assert _.message.new_chat_members == []
+	assert _.message.new_chat_members is None
 	assert _.message.left_chat_member is None
 	assert _.message.new_chat_title is None
-	assert _.message.new_chat_photo == []
+	assert _.message.new_chat_photo is None
 	assert _.message.delete_chat_photo is None
 	assert _.message.group_chat_created is None
 	assert _.message.supergroup_chat_created is None
