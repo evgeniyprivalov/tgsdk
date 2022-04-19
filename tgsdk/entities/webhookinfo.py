@@ -3,7 +3,10 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import List
+from typing import (
+	List,
+	Optional
+)
 
 from tgsdk import TelegramEntity
 
@@ -16,7 +19,7 @@ class WebhookInfo(TelegramEntity):
 
 	__slots__ = (
 		"url", "has_custom_certificate", "pending_update_count", "ip_address",
-		"last_error_date", "last_error_message", "max_connections", "allowed_updates"
+		"last_error_date", "last_error_message", "last_synchronization_error_date", "max_connections", "allowed_updates"
 	)
 
 	def __init__(
@@ -24,11 +27,12 @@ class WebhookInfo(TelegramEntity):
 		url: str,
 		has_custom_certificate: bool,
 		pending_update_count: int,
-		ip_address: str = None,
-		last_error_date: int = None,
-		last_error_message: str = None,
-		max_connections: int = None,
-		allowed_updates: List[str] = None,
+		ip_address: Optional[str] = None,
+		last_error_date: Optional[int] = None,
+		last_error_message: Optional[str] = None,
+		last_synchronization_error_date: Optional[int] = None,
+		max_connections: Optional[int] = None,
+		allowed_updates: Optional[List[str]] = None
 	):
 		self.url = url
 		self.has_custom_certificate = has_custom_certificate
@@ -37,6 +41,7 @@ class WebhookInfo(TelegramEntity):
 		self.ip_address = ip_address
 		self.last_error_date = last_error_date
 		self.last_error_message = last_error_message
+		self.last_synchronization_error_date = last_synchronization_error_date
 		self.max_connections = max_connections
 		self.allowed_updates = allowed_updates
 

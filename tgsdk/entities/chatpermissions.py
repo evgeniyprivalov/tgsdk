@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Optional
+
 from tgsdk import TelegramEntity
 
 
@@ -19,14 +21,14 @@ class ChatPermissions(TelegramEntity):
 
 	def __init__(
 		self,
-		can_send_messages: bool = None,
-		can_send_media_messages: bool = None,
-		can_send_polls: bool = None,
-		can_send_other_messages: bool = None,
-		can_add_web_page_previews: bool = None,
-		can_change_info: bool = None,
-		can_invite_users: bool = None,
-		can_pin_messages: bool = None
+		can_send_messages: Optional[bool] = None,
+		can_send_media_messages: Optional[bool] = None,
+		can_send_polls: Optional[bool] = None,
+		can_send_other_messages: Optional[bool] = None,
+		can_add_web_page_previews: Optional[bool] = None,
+		can_change_info: Optional[bool] = None,
+		can_invite_users: Optional[bool] = None,
+		can_pin_messages: Optional[bool] = None
 	):
 		self.can_send_messages = can_send_messages
 		self.can_send_media_messages = can_send_media_messages

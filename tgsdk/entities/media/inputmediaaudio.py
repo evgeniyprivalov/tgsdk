@@ -4,6 +4,7 @@
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from typing import (
+	Optional,
 	Any,
 	Union,
 	List
@@ -24,14 +25,14 @@ class InputMediaAudio(InputMedia):
 	def __init__(
 		self,
 		media: Union[InputFile, Audio],
-		thumb: InputFile = None,
-		caption: str = None,
-		parse_mode: str = None,
-		caption_entities: List[MessageEntity] = None,
-		duration: int = None,
-		performer: int = None,
-		title: str = None,
-		file_name: str = None,
+		thumb: Optional[InputFile] = None,
+		caption: Optional[str] = None,
+		parse_mode: Optional[str] = None,
+		caption_entities: Optional[List[MessageEntity]] = None,
+		duration: Optional[int] = None,
+		performer: Optional[int] = None,
+		title: Optional[str] = None,
+		file_name: Optional[str] = None,
 		**_kwargs: Any
 	):
 		super().__init__(

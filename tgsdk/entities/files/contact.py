@@ -3,7 +3,10 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import Union
+from typing import (
+	Union,
+	Optional
+)
 
 from tgsdk import TelegramEntity
 
@@ -19,9 +22,9 @@ class Contact(TelegramEntity):
 		self,
 		phone_number: str,
 		first_name: str,
-		user_id: Union[str, int] = None,
-		last_name: str = None,
-		vcard: str = None,
+		user_id: Optional[Union[str, int]] = None,
+		last_name: Optional[str] = None,
+		vcard: Optional[str] = None
 	):
 		self.phone_number = phone_number
 		self.first_name = first_name

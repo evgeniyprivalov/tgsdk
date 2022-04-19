@@ -4,6 +4,7 @@
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from typing import (
+	Optional,
 	Dict,
 	TYPE_CHECKING
 )
@@ -27,7 +28,7 @@ class ChatPhoto(TelegramEntity):
 		big_file_id: str,
 		big_file_unique_id: str,
 
-		bot: "Bot" = None
+		bot: Optional["Bot"] = None
 	):
 		self.small_file_id = small_file_id
 		self.small_file_unique_id = small_file_unique_id

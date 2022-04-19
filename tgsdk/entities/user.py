@@ -3,7 +3,10 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import Any
+from typing import (
+	Any,
+	Optional
+)
 
 from tgsdk import TelegramEntity
 
@@ -24,12 +27,12 @@ class User(TelegramEntity):
 		id: int,
 		first_name: str,
 		is_bot: bool,
-		username: str = None,
-		last_name: str = None,
-		language_code: str = None,
-		can_join_groups: bool = None,
-		can_read_all_group_messages: bool = None,
-		supports_inline_queries: bool = None,
+		username: Optional[str] = None,
+		last_name: Optional[str] = None,
+		language_code: Optional[str] = None,
+		can_join_groups: Optional[bool] = None,
+		can_read_all_group_messages: Optional[bool] = None,
+		supports_inline_queries: Optional[bool] = None,
 		**_kwargs: Any
 	):
 		self.id = int(id)

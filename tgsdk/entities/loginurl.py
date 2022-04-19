@@ -3,6 +3,7 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Optional
 from tgsdk import TelegramEntity
 
 
@@ -16,9 +17,9 @@ class LoginUrl(TelegramEntity):
 	def __init__(
 		self,
 		url: str,
-		forward_text: bool = None,
-		bot_username: str = None,
-		request_write_access: bool = None
+		forward_text: Optional[bool] = None,
+		bot_username: Optional[str] = None,
+		request_write_access: Optional[bool] = None
 	):
 		self.url = url
 		self.forward_text = forward_text

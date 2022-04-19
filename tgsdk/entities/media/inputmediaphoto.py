@@ -4,6 +4,7 @@
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from typing import (
+	Optional,
 	Any,
 	Union,
 	List
@@ -24,10 +25,10 @@ class InputMediaPhoto(InputMedia):
 	def __init__(
 		self,
 		media: Union[FileInput, PhotoSize],
-		caption: str = None,
-		parse_mode: str = None,
-		caption_entities: List[MessageEntity] = None,
-		file_name: str = None,
+		caption: Optional[str] = None,
+		parse_mode: Optional[str] = None,
+		caption_entities: Optional[List[MessageEntity]] = None,
+		file_name: Optional[str] = None,
 		**_kwargs: Any
 	):
 		super().__init__(

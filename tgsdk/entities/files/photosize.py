@@ -4,6 +4,7 @@
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from typing import (
+	Optional,
 	Dict,
 	TYPE_CHECKING
 )
@@ -30,9 +31,9 @@ class PhotoSize(TelegramEntity):
 		file_unique_id: str,
 		width: int,
 		height: int,
-		file_size: int = None,
+		file_size: Optional[int] = None,
 
-		bot: "Bot" = None
+		bot: Optional["Bot"] = None
 	):
 		self.file_id = file_id
 		self.file_unique_id = file_unique_id

@@ -8,6 +8,7 @@ import mimetypes
 import os
 from typing import (
 	IO,
+	Optional,
 	Union,
 	Tuple
 )
@@ -26,8 +27,8 @@ class InputFile(TelegramEntity):
 	def __init__(
 		self,
 		file: Union[bytes, IO],
-		file_name: str = None,
-		as_attach: bool = None
+		file_name: Optional[str] = None,
+		as_attach: Optional[bool] = None
 	):
 		self.as_attach = bool(as_attach)
 

@@ -29,9 +29,9 @@ class CallbackQuery(TelegramEntity):
 		id: str,
 		from_user: User,
 		chat_instance: str,
-		message: Message = None,
-		inline_message_id: str = None,
-		data: str = None,
+		message: Optional[Message] = None,
+		inline_message_id: Optional[str] = None,
+		data: Optional[str] = None,
 		# game_short_name: str = None
 	):
 		self.id = id

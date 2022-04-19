@@ -3,7 +3,13 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from tgsdk import TelegramEntity
+from typing import Optional
+
+from tgsdk import (
+	TelegramEntity,
+	KeyboardButtonPollType,
+	WebAppInfo
+)
 
 
 class KeyboardButton(TelegramEntity):
@@ -11,14 +17,21 @@ class KeyboardButton(TelegramEntity):
 	https://core.telegram.org/bots/api#keyboardbutton
 
 	"""
-	__slots__ = ("text", "request_contact", "request_location")
+	__slots__ = (
+		"text", "request_contact", "request_location",
+		"request_poll", "web_app"
+	)
 
 	def __init__(
 		self,
 		text: str,
-		request_contact: bool = None,
-		request_location: bool = None
+		request_contact: Optional[bool] = None,
+		request_location: Optional[bool] = None,
+		request_poll: Optional[KeyboardButtonPollType] = None,
+		web_app: Optional[WebAppInfo] = None
 	):
 		self.text = text
 		self.request_contact = request_contact
 		self.request_location = request_location
+		self.request_poll = request_poll
+		self.web_app = web_app

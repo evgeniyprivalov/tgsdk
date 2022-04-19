@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Optional
+
 from tgsdk import TelegramEntity
 from .photosize import PhotoSize
 
@@ -21,11 +23,11 @@ class Sticker(TelegramEntity):
 		width: int,
 		height: int,
 		is_animated: bool,
-		thumb: PhotoSize = None,
-		emoji: str = None,
-		set_name: str = None,
-		mask_position: str = None,
-		file_size: int = None
+		thumb: Optional[PhotoSize] = None,
+		emoji: Optional[str] = None,
+		set_name: Optional[str] = None,
+		mask_position: Optional[str] = None,
+		file_size: Optional[int] = None
 	):
 		self.file_id = file_id
 		self.file_unique_id = file_unique_id
