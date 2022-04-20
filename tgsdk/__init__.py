@@ -28,7 +28,27 @@ from .entities.files.video_note import VideoNote
 from .entities.chataction import ChatAction
 from .entities.userprofilephotos import UserProfilePhotos
 
+
+# WebApp
+from .entities.webapp.webappinfo import WebAppInfo
+from .entities.webapp.webappdata import WebAppData
+from .entities.webapp.sentwebappmessage import SentWebAppMessage
+
+
+# MenuButton
+from .entities.menu_button.menubutton import MenuButton
+from .entities.menu_button.menubuttoncommands import MenuButtonCommands
+from .entities.menu_button.menubuttondefault import MenuButtonDefault
+from .entities.menu_button.menubuttonwebapp import MenuButtonWebApp
+
+
+# Inline Results
+from .entities.inline_query_results.inlinequeryresult import InlineQueryResult
+
+
+
 # KEYBOARD
+from .entities.keyboard.keyboardbuttonpolltype import KeyboardButtonPollType
 from .entities.keyboard.replymarkup import ReplyMarkup
 from .entities.keyboard.keyboardbutton import KeyboardButton
 from .entities.keyboard.replykeyboardmarkup import ReplyKeyboardMarkup
@@ -61,6 +81,16 @@ from .entities.passport.passportfile import PassportFile
 from .entities.passport.encryptedcredentials import EncryptedCredentials
 from .entities.passport.encryptedpassportelement import EncryptedPassportElement
 from .entities.passport.passportdata import PassportData
+from .entities.passport.passportelementerror import PassportElementError
+from .entities.passport.passportelementerrordatafield import PassportElementErrorDataField
+from .entities.passport.passportelementerrorfrontside import PassportElementErrorFrontSide
+from .entities.passport.passportelementerrorreverseside import PassportElementErrorReverseSide
+from .entities.passport.passportelementerrorselfie import PassportElementErrorSelfie
+from .entities.passport.passportelementerrorfile import PassportElementErrorFile
+from .entities.passport.passportelementerrorfiles import PassportElementErrorFiles
+from .entities.passport.passportelementerrortranslationfile import PassportElementErrorTranslationFile
+from .entities.passport.passportelementerrortranslationfiles import PassportElementErrorTranslationFiles
+from .entities.passport.passportelementerrorunspecified import PassportElementErrorUnspecified
 
 from .entities.message import Message
 from .entities.webhookinfo import WebhookInfo

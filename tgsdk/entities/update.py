@@ -41,19 +41,19 @@ class Update(TelegramEntity):
 	def __init__(
 		self,
 		update_id: int,
-		message: Message = None,
-		edited_message: Message = None,
-		channel_post: Message = None,
-		edited_channel_post: Message = None,
+		message: Optional[Message] = None,
+		edited_message: Optional[Message] = None,
+		channel_post: Optional[Message] = None,
+		edited_channel_post: Optional[Message] = None,
 		# inline_query: InlineQuery = None,
 		# chosen_inline_result: ChosenInlineResult = None,
-		callback_query: CallbackQuery = None,
-		shipping_query: ShippingQuery = None,
-		pre_checkout_query: PreCheckoutQuery = None,
+		callback_query: Optional[CallbackQuery] = None,
+		shipping_query: Optional[ShippingQuery] = None,
+		pre_checkout_query: Optional[PreCheckoutQuery] = None,
 		# poll: Poll = None,
 		# poll_answer: PollAnswer = None,
-		my_chat_member: ChatMemberUpdated = None,
-		chat_member: ChatMemberUpdated = None,
+		my_chat_member: Optional[ChatMemberUpdated] = None,
+		chat_member: Optional[ChatMemberUpdated] = None,
 		**_kwargs: Any
 	):
 		self.update_id = update_id

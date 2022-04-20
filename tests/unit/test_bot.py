@@ -3,8 +3,6 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-import os
-
 try:
 	import ujson as json
 except ImportError:
@@ -15,8 +13,6 @@ import time
 from tgsdk import (
 	InlineKeyboardButton,
 	InlineKeyboardMarkup,
-	ReplyKeyboardRemove,
-	KeyboardButton,
 	ReplyKeyboardMarkup,
 	ParseMode,
 	PhotoSize,
@@ -24,20 +20,65 @@ from tgsdk import (
 	Message,
 	Video,
 	Audio,
-	Sticker,
 	Document,
 	Voice,
-	VideoNote,
 	Contact,
 	Location,
-	Venue,
 	Chat,
 	Bot,
-	User
+	User,
+	WebAppInfo,
+	KeyboardButton,
+	MenuButtonWebApp,
+	MenuButtonDefault,
+	MenuButtonCommands,
+	LabeledPrice
 )
-from tgsdk.utils.constants import MAX_CAPTION_LENGTH, MAX_MESSAGE_LENGTH
 from tgsdk.network.request import Request
+from tgsdk.utils.constants import (
+	MAX_CAPTION_LENGTH,
+	MAX_MESSAGE_LENGTH
+)
 from .constants import TestValues
+
+
+def test__bot__set_chat_menu_button__web_app():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+	# _ = Bot(token="1013312051:AAEe8QYWnkrYMia6K3-EDEkTdx0TQlXmZJM")
+
+	result = _.set_chat_menu_button(
+		chat_id=TestValues.USER_CHAT_ID,
+		menu_button=MenuButtonWebApp(
+			text="Open",
+			web_app=WebAppInfo(
+				url="https://botmakerdiag249.blob.core.windows.net/temp-files/index.html"
+			)
+		)
+	)
+
+	assert result is True
+
+
+def test__bot__set_chat_menu_button__default():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	result = _.set_chat_menu_button(
+		chat_id=TestValues.USER_CHAT_ID,
+		menu_button=MenuButtonDefault()
+	)
+
+	assert result is True
+
+
+def test__bot__set_chat_menu_button__commands():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	result = _.set_chat_menu_button(
+		chat_id=TestValues.USER_CHAT_ID,
+		menu_button=MenuButtonCommands()
+	)
+
+	assert result is True
 
 
 def test__bot__init():
@@ -135,6 +176,7 @@ def test__bot__init__get_me():
 		"username": TestValues.BOT_USERNAME,
 		"first_name": TestValues.BOT_FIRST_NAME
 	}
+
 
 def test__bot__get_me():
 	_ = Bot(token=TestValues.BOT_API_TOKEN)
@@ -294,7 +336,6 @@ def test__bot__sendMessage():
 	assert result.message_id is not None
 	assert isinstance(result.message_id, int) is True
 	assert result.reply_markup is None
-
 
 	# With inline
 	result = _.send_message(
@@ -822,4 +863,44 @@ def test__bot__sendLocation():
 	assert result_2.location.heading is None
 	assert result_2.location.proximity_alert_radius is None
 
-	# TODO: Live Locations
+
+def test__bot__sendInvoice():
+	_ = Bot(token=TestValues.BOT_API_TOKEN)
+
+	result = _.send_invoice(
+		chat_id=TestValues.USER_CHAT_ID,
+		title="Invoice #1",
+		description="Description of the Invoice #1",
+		payload="payload",
+		provider_token=TestValues.PAYMENT_YOOKASSA_PROVIDER_TOKEN,
+		photo_url="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/The_Blue_Marble_%28remastered%29.jpg/640px-The_Blue_Marble_%28remastered%29.jpg",
+		currency="RUB",
+		prices=[
+			LabeledPrice(
+				label="Product #1",
+				amount=10000  # 100.00 RUB
+			),
+			LabeledPrice(
+				label="Product #2",
+				amount=20000  # 200.00 RUB
+			)
+		],
+		reply_markup=InlineKeyboardMarkup(
+			inline_keyboard=[
+				[
+					InlineKeyboardButton(
+						text="Pay (3 RUB)",
+						pay=True
+					)
+				]
+			]
+		)
+	)
+
+	assert isinstance(result, Message) is True
+	assert result.invoice is not None
+	assert result.invoice.description == "Description of the Invoice #1"
+	assert result.invoice.currency == "RUB"
+	assert result.invoice.title == "Invoice #1"
+	assert result.invoice.total_amount == 30000  # 300.00 RUB
+	assert result.invoice.start_parameter == ""

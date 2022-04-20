@@ -7,6 +7,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 - 
 
+## [1.1.0] - 2022-04-18
+### Added
+- New Entities:
+    - `SentWebAppMessage`
+    - `WebAppData`
+    - `WebAppInfo`
+    - `MenuButton`
+    - `MenuButtonCommands`
+    - `MenuButtonDefault`
+    - `MenuButtonWebApp`
+    - `KeyboardButtonPollType`
+    - `InlineQueryResult`
+    - `PassportElementError`
+    - `PassportElementErrorDataField`
+    - `PassportElementErrorFile`
+    - `PassportElementErrorFiles`
+    - `PassportElementErrorFrontSide`
+    - `PassportElementErrorReverseSide`
+    - `PassportElementErrorSelfie`
+    - `PassportElementErrorTranslationFile`
+    - `PassportElementErrorTranslationFiles`
+    - `PassportElementErrorUnspecified`
+- Add methods to the `Bot` entity:
+    - `set_chat_menu_button`
+    - `get_chat_menu_button`
+    - `answer_web_app_query`
+    - `answer_inline_query`
+### Changed
+- Methods `send_invoice`, `answer_shipping_query`, `answer_pre_checkout_query` of the `Bot` entity
+- Update signature of some entities
+- Updates some tests
+### Removed
+
+
 ## [1.0.22] - 2022-04-11
 ### Added
 - Add new field `has_protected_content` to `Message` entity

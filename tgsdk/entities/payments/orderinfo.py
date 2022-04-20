@@ -25,10 +25,10 @@ class OrderInfo(TelegramEntity):
 
 	def __init__(
 		self,
-		name: str = None,
-		phone_number: str = None,
-		email: str = None,
-		shipping_address: ShippingAddress = None
+		name: Optional[str] = None,
+		phone_number: Optional[str] = None,
+		email: Optional[str] = None,
+		shipping_address: Optional[ShippingAddress] = None
 	):
 		self.name = name
 		self.phone_number = phone_number

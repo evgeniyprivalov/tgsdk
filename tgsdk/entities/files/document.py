@@ -31,12 +31,12 @@ class Document(TelegramEntity):
 		self,
 		file_id: str,
 		file_unique_id: str,
-		thumb: PhotoSize = None,
-		file_name: str = None,
-		mime_type: str = None,
-		file_size: int = None,
+		thumb: Optional[PhotoSize] = None,
+		file_name: Optional[str] = None,
+		mime_type: Optional[str] = None,
+		file_size: Optional[int] = None,
 
-		bot: "Bot" = None
+		bot: Optional["Bot"] = None
 	):
 		self.file_id = file_id
 		self.file_unique_id = file_unique_id

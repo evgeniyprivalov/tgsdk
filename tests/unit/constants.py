@@ -15,5 +15,7 @@ class TestValues:
 	BOT_FIRST_NAME = os.environ["BOT_FIRST_NAME"]
 	BOT_API_TOKEN = os.environ["BOT_API_TOKEN"]
 
+	PAYMENT_YOOKASSA_PROVIDER_TOKEN = os.environ["PAYMENT_YOOKASSA_PROVIDER_TOKEN"]
+
 	CHAT_ID = os.getenv("CHAT_ID", None)  # type: ID  # Paste Your chat id
 	CHAT_USERNAME = os.getenv("CHAT_USERNAME", None)  # type: str  # Paste your chat username if need

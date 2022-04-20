@@ -4,6 +4,7 @@
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from typing import (
+	Optional,
 	Any,
 	Union,
 	List
@@ -24,14 +25,14 @@ class InputMediaAnimation(InputMedia):
 	def __init__(
 		self,
 		media: Union[InputFile, Animation],
-		thumb: InputFile = None,
-		caption: str = None,
-		parse_mode: str = None,
-		caption_entities: List[MessageEntity] = None,
-		width: int = None,
-		height: int = None,
-		duration: int = None,
-		file_name: str = None,
+		thumb: Optional[InputFile] = None,
+		caption: Optional[str] = None,
+		parse_mode: Optional[str] = None,
+		caption_entities: Optional[List[MessageEntity]] = None,
+		width: Optional[int] = None,
+		height: Optional[int] = None,
+		duration: Optional[int] = None,
+		file_name: Optional[str] = None,
 		**_kwargs: Any
 	):
 		super().__init__(

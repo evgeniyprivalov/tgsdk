@@ -37,7 +37,12 @@ from tgsdk import (
 	User,
 	ReplyMarkup,
 	Message,
-	WebhookInfo
+	WebhookInfo,
+	MenuButton,
+	InlineQueryResult,
+	LabeledPrice,
+	ShippingOption,
+	PassportElementError
 )
 from tgsdk import TelegramEntity
 from tgsdk.network.request import Request
@@ -64,8 +69,8 @@ class Bot(TelegramEntity):
 	def __init__(
 		self,
 		token: str,
-		base_url: str = None,
-		base_file_url: str = None,
+		base_url: Optional[str] = None,
+		base_file_url: Optional[str] = None,
 
 		**_kwargs: Any
 	):
@@ -1168,8 +1173,48 @@ class Bot(TelegramEntity):
 			kwargs=kwargs
 		)
 
-	def answer_inline_query(self):
-		pass
+	def answer_inline_query(
+		self,
+		inline_query_id: str,
+		results: List[InlineQueryResult],
+		cache_time: Optional[int] = None,
+		is_personal: Optional[bool] = None,
+		next_offset: Optional[str] = None,
+		switch_pm_text: Optional[str] = None,
+		switch_pm_parameter: Optional[str] = None,
+		timeout: float = None,
+		kwargs: Dict = None
+	):
+		"""
+		https://core.telegram.org/bots/api#answerinlinequery
+
+		"""
+		payload = {
+			"inline_query_id": inline_query_id,
+			"results": results
+		}
+
+		if cache_time is not None:
+			payload["cache_time"] = cache_time
+
+		if is_personal is not None:
+			payload["is_personal"] = is_personal
+
+		if next_offset is not None:
+			payload["next_offset"] = next_offset
+
+		if switch_pm_text is not None:
+			payload["switch_pm_text"] = switch_pm_text
+
+		if switch_pm_parameter is not None:
+			payload["switch_pm_parameter"] = switch_pm_parameter
+
+		return self._post(
+			"answerInlineQuery",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
 
 	def get_user_profile_photos(
 		self,
@@ -1394,6 +1439,34 @@ class Bot(TelegramEntity):
 
 		return self._post(
 			"answerCallbackQuery",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def answer_web_app_query(
+		self,
+		web_app_query_id: str,
+		result: InlineQueryResult,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#answercallbackquery
+
+		:param str web_app_query_id:
+		:param InlineQueryResult result:
+		:param timeout:
+		:param kwargs:
+		:return:
+		"""
+		payload = {
+			"web_app_query_id": web_app_query_id,
+			"result": result.to_dict()
+		}
+
+		return self._post(
+			"answerWebAppQuery",
 			payload,
 			timeout=timeout,
 			kwargs=kwargs
@@ -2230,17 +2303,191 @@ class Bot(TelegramEntity):
 	def unpin_all_chat_messages(self):
 		pass
 
-	def set_passport_data_errors(self):
-		pass
+	def set_passport_data_errors(
+		self,
+		user_id: int,
+		errors: [PassportElementError],
+		timeout: Optional[float] = None,
+		kwargs: Optional[Dict] = None
+	):
+		"""
+		https://core.telegram.org/bots/api#setpassportdataerrors
 
-	def send_invoice(self):
-		pass
+		"""
+		payload = {
+			"user_id": user_id,
+			"errors": [_.to_dict() for _ in errors]
+		}
 
-	def answer_shipping_query(self):
-		pass
+		return self._post(
+			"setPassportDataErrors",
+			payload=payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
 
-	def answer_pre_checkout_query(self):
-		pass
+	def send_invoice(
+		self,
+		chat_id: ID,
+		title: str,
+		description: str,
+		payload: str,
+		provider_token: str,
+		currency: str,
+		prices: [LabeledPrice],
+		max_tip_amount: Optional[int] = None,
+		suggested_tip_amounts: Optional[List[int]] = None,
+		start_parameter: Optional[str] = None,
+		provider_data: Optional[str] = None,
+		photo_url: Optional[str] = None,
+		photo_size: Optional[int] = None,
+		photo_width: Optional[int] = None,
+		photo_height: Optional[int] = None,
+		need_name: Optional[bool] = None,
+		need_phone_number: Optional[bool] = None,
+		need_email: Optional[bool] = None,
+		need_shipping_address: Optional[bool] = None,
+		send_phone_number_to_provider: Optional[bool] = None,
+		send_email_to_provider: Optional[bool] = None,
+		is_flexible: Optional[bool] = None,
+		disable_notification: Optional[bool] = None,
+		protect_content: Optional[bool] = None,
+		reply_to_message_id: Optional[int] = None,
+		allow_sending_without_reply: Optional[bool] = None,
+		reply_markup: Optional[InlineKeyboardMarkup] = None,
+		timeout: Optional[float] = None,
+		kwargs: Optional[Dict] = None
+	):
+		"""
+		https://core.telegram.org/bots/api#sendinvoice
+
+		"""
+		payload = {
+			"chat_id": chat_id,
+			"title": title,
+			"description": description,
+			"payload": payload,
+			"provider_token": provider_token,
+			"currency": currency,
+			"prices": [price.to_dict() for price in prices]
+		}
+
+		if max_tip_amount is not None:
+			payload["max_tip_amount"] = max_tip_amount
+
+		if suggested_tip_amounts is not None:
+			payload["suggested_tip_amounts"] = suggested_tip_amounts
+
+		if start_parameter is not None:
+			payload["start_parameter"] = start_parameter
+
+		if provider_data is not None:
+			payload["provider_data"] = provider_data
+
+		if photo_url is not None:
+			payload["photo_url"] = photo_url
+
+		if photo_size is not None:
+			payload["photo_size"] = photo_size
+
+		if photo_width is not None:
+			payload["photo_width"] = photo_width
+
+		if photo_height is not None:
+			payload["photo_height"] = photo_height
+
+		if need_name is not None:
+			payload["need_name"] = need_name
+
+		if need_phone_number is not None:
+			payload["need_phone_number"] = need_phone_number
+
+		if need_email is not None:
+			payload["need_email"] = need_email
+
+		if need_shipping_address is not None:
+			payload["need_shipping_address"] = need_shipping_address
+
+		if send_phone_number_to_provider is not None:
+			payload["send_phone_number_to_provider"] = send_phone_number_to_provider
+
+		if send_email_to_provider is not None:
+			payload["send_email_to_provider"] = send_email_to_provider
+
+		if is_flexible is not None:
+			payload["is_flexible"] = is_flexible
+
+		if protect_content is not None:
+			payload["protect_content"] = protect_content
+
+		return self._send(
+			"sendInvoice",
+			payload,
+			reply_markup=reply_markup,
+			disable_notification=disable_notification,
+			reply_to_message_id=reply_to_message_id,
+			allow_sending_without_reply=allow_sending_without_reply,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def answer_shipping_query(
+		self,
+		shipping_query_id: str,
+		ok: bool,
+		shipping_options: Optional[List[ShippingOption]] = None,
+		error_message: Optional[str] = None,
+		timeout: Optional[float] = None,
+		kwargs: Optional[Dict] = None
+	):
+		"""
+		https://core.telegram.org/bots/api#answershippingquery
+
+		"""
+		payload = {
+			"shipping_query_id": shipping_query_id,
+			"ok": ok
+		}
+
+		if shipping_options is not None:
+			payload["shipping_options"] = [_.to_dict() for _ in shipping_options]
+
+		if error_message is not None:
+			payload["error_message"] = error_message
+
+		return self._post(
+			"answerShippingQuery",
+			payload=payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def answer_pre_checkout_query(
+		self,
+		pre_checkout_query_id: str,
+		ok: bool,
+		error_message: Optional[str] = None,
+		timeout: float = None,
+		kwargs: Dict = None
+	):
+		"""
+		https://core.telegram.org/bots/api#answerprecheckoutquery
+
+		"""
+		payload = {
+			"pre_checkout_query_id": pre_checkout_query_id,
+			"ok": ok
+		}
+
+		if error_message is not None:
+			payload["error_message"] = error_message
+
+		return self._post(
+			"answerShippingQuery",
+			payload=payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
 
 	def get_my_commands(
 		self,
@@ -2257,6 +2504,55 @@ class Bot(TelegramEntity):
 		_result = self._post("getMyCommands", timeout=timeout, kwargs=kwargs)
 
 		return [BotCommand.de_json(command) for command in _result]
+
+	def set_chat_menu_button(
+		self,
+		chat_id: Optional[ID] = None,
+		menu_button: Optional[MenuButton] = None,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#setchatmenubutton
+
+		"""
+		payload = dict()
+
+		if chat_id is not None:
+			payload["chat_id"] = chat_id
+
+		if menu_button:
+			payload["menu_button"] = menu_button.to_dict()
+
+		return self._post(
+			"setChatMenuButton",
+			payload=payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def get_chat_menu_button(
+		self,
+		chat_id: Optional[ID] = None,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> MenuButton:
+		"""
+		https://core.telegram.org/bots/api#getchatmenubutton
+
+		"""
+		payload = dict()
+
+		if chat_id is not None:
+			payload["chat_id"] = chat_id
+
+		_result = self._post(
+			"getChatMenuButton",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+		return MenuButton.de_json(_result)
 
 	def set_my_commands(
 		self,

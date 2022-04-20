@@ -3,7 +3,7 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-# from typing import TYPE_CHECKING
+from typing import Optional
 
 from tgsdk import TelegramEntity
 
@@ -24,8 +24,8 @@ class File(TelegramEntity):
 		self,
 		file_id: str,
 		file_unique_id: str,
-		file_size: int = None,
-		file_path: str = None,
+		file_size: Optional[int] = None,
+		file_path: Optional[str] = None
 		# bot: "Bot" = None,
 	):
 		self.file_id = file_id

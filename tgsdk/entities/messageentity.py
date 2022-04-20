@@ -26,9 +26,9 @@ class MessageEntity(TelegramEntity):
 		type: str,
 		offset: int,
 		length: int,
-		url: str = None,
-		user: User = None,
-		language: str = None
+		url: Optional[str] = None,
+		user: Optional[User] = None,
+		language: Optional[str] = None
 	):
 		self.type = type
 		self.offset = offset

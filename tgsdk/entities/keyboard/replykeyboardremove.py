@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Optional
+
 from .replymarkup import ReplyMarkup
 
 
@@ -11,7 +13,7 @@ class ReplyKeyboardRemove(ReplyMarkup):
 
 	def __init__(
 		self,
-		selective: bool = False
+		selective: Optional[bool] = False
 	):
 		self.remove_keyboard = True
 

@@ -32,14 +32,14 @@ class Audio(TelegramEntity):
 		file_id: str,
 		file_unique_id: str,
 		duration: int,
-		performer: str = None,
-		title: str = None,
-		file_name: str = None,
-		mime_type: str = None,
-		file_size: int = None,
-		thumb: PhotoSize = None,
+		performer: Optional[str] = None,
+		title: Optional[str] = None,
+		file_name: Optional[str] = None,
+		mime_type: Optional[str] = None,
+		file_size: Optional[int] = None,
+		thumb: Optional[PhotoSize] = None,
 
-		bot: "Bot" = None
+		bot: Optional["Bot"] = None
 	):
 		self.file_id = file_id
 		self.file_unique_id = file_unique_id

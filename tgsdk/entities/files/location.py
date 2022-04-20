@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Optional
+
 from tgsdk import TelegramEntity
 
 
@@ -17,10 +19,10 @@ class Location(TelegramEntity):
 		self,
 		latitude: float,
 		longitude: float,
-		horizontal_accuracy: float = None,
-		live_period: int = None,
-		heading: int = None,
-		proximity_alert_radius: int = None,
+		horizontal_accuracy: Optional[float] = None,
+		live_period: Optional[int] = None,
+		heading: Optional[int] = None,
+		proximity_alert_radius: Optional[int] = None,
 	):
 		self.latitude = float(latitude)
 		self.longitude = float(longitude)

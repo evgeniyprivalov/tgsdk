@@ -22,15 +22,15 @@ class EncryptedPassportElement(TelegramEntity):
 	def __init__(
 		self,
 		type: str,
-		data: str = None,
-		phone_number: str = None,
-		email: str = None,
-		files: List[PassportFile] = None,
-		front_side: PassportFile = None,
-		reverse_side: PassportFile = None,
-		selfie: PassportFile = None,
-		translation: List[PassportFile] = None,
-		hash: str = None
+		data: Optional[str] = None,
+		phone_number: Optional[str] = None,
+		email: Optional[str] = None,
+		files: Optional[List[PassportFile]] = None,
+		front_side: Optional[PassportFile] = None,
+		reverse_side: Optional[PassportFile] = None,
+		selfie: Optional[PassportFile] = None,
+		translation: Optional[List[PassportFile]] = None,
+		hash: Optional[str] = None
 	):
 		self.type = type
 		self.data = data

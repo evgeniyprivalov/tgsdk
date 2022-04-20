@@ -5,6 +5,7 @@
 
 from typing import (
 	TYPE_CHECKING,
+	Optional,
 	Any
 )
 
@@ -40,22 +41,22 @@ class Chat(TelegramEntity):
 		self,
 		id: int,
 		type: str,
-		title: str = None,
-		username: str = None,
-		first_name: str = None,
-		last_name: str = None,
-		photo: ChatPhoto = None,
-		bio: str = None,
-		description: str = None,
-		invite_link: str = None,
-		pinned_message: "Message" = None,
-		permissions: ChatPermissions = None,
-		slow_mode_delay: int = None,
-		message_auto_delete_time: int = None,
-		sticker_set_name: str = None,
-		can_set_sticker_set: bool = None,
-		linked_chat_id: int = None,
-		location: ChatLocation = None,
+		title: Optional[str] = None,
+		username: Optional[str] = None,
+		first_name: Optional[str] = None,
+		last_name: Optional[str] = None,
+		photo: Optional[ChatPhoto] = None,
+		bio: Optional[str] = None,
+		description: Optional[str] = None,
+		invite_link: Optional[str] = None,
+		pinned_message: Optional["Message"] = None,
+		permissions: Optional[ChatPermissions] = None,
+		slow_mode_delay: Optional[int] = None,
+		message_auto_delete_time: Optional[int] = None,
+		sticker_set_name: Optional[str] = None,
+		can_set_sticker_set: Optional[bool] = None,
+		linked_chat_id: Optional[int] = None,
+		location: Optional[ChatLocation] = None,
 		**_kwargs: Any
 	):
 		self.id = id
