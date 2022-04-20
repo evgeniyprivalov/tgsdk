@@ -33,6 +33,7 @@ class User(TelegramEntity):
 		can_join_groups: Optional[bool] = None,
 		can_read_all_group_messages: Optional[bool] = None,
 		supports_inline_queries: Optional[bool] = None,
+
 		**_kwargs: Any
 	):
 		self.id = int(id)

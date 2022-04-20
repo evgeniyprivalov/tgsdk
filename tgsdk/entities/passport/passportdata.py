@@ -7,7 +7,8 @@ from typing import (
 	Optional,
 	List,
 	Dict,
-	Union
+	Union,
+	Any
 )
 
 from tgsdk import (
@@ -28,7 +29,9 @@ class PassportData(TelegramEntity):
 	def __init__(
 		self,
 		data: List[EncryptedPassportElement],
-		credentials: EncryptedCredentials
+		credentials: EncryptedCredentials,
+
+		**_kwargs: Any
 	):
 		self.data = data
 		self.credentials = credentials

@@ -6,7 +6,8 @@
 from typing import (
 	Optional,
 	Dict,
-	Union
+	Union,
+	Any
 )
 
 from tgsdk import TelegramEntity
@@ -23,7 +24,9 @@ class ChatLocation(TelegramEntity):
 	def __init__(
 		self,
 		location: Location,
-		address: str
+		address: str,
+
+		**_kwargs: Any
 	):
 		self.location = location
 		self.address = address

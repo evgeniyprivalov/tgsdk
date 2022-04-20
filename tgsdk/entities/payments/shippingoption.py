@@ -7,7 +7,8 @@ from typing import (
 	List,
 	Optional,
 	Dict,
-	Union
+	Union,
+	Any
 )
 
 from tgsdk import LabeledPrice
@@ -26,7 +27,9 @@ class ShippingOption(TelegramEntity):
 		self,
 		id: str,
 		title: str,
-		prices: List[LabeledPrice]
+		prices: List[LabeledPrice],
+
+		**_kwargs: Any
 	):
 		self.id = id
 		self.title = title

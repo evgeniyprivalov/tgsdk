@@ -6,7 +6,8 @@
 from typing import (
 	Optional,
 	Dict,
-	TYPE_CHECKING
+	TYPE_CHECKING,
+	Any
 )
 
 from tgsdk import TelegramEntity
@@ -28,7 +29,9 @@ class ChatPhoto(TelegramEntity):
 		big_file_id: str,
 		big_file_unique_id: str,
 
-		bot: Optional["Bot"] = None
+		bot: Optional["Bot"] = None,
+
+		**_kwargs: Any
 	):
 		self.small_file_id = small_file_id
 		self.small_file_unique_id = small_file_unique_id

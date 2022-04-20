@@ -3,7 +3,10 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import List
+from typing import (
+	List,
+	Any
+)
 
 from tgsdk import PassportElementError
 
@@ -22,7 +25,9 @@ class PassportElementErrorFiles(PassportElementError):
 		source: str,
 		type: str,
 		file_hashes: List[str],
-		message: str
+		message: str,
+
+		**_kwargs: Any
 	):
 		self.source = source
 		self.type = type

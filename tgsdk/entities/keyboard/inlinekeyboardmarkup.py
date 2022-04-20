@@ -6,7 +6,8 @@
 from typing import (
 	Optional,
 	Dict,
-	List
+	List,
+	Any
 )
 
 from .inlinekeyboardbutton import InlineKeyboardButton
@@ -23,6 +24,8 @@ class InlineKeyboardMarkup(ReplyMarkup):
 	def __init__(
 		self,
 		inline_keyboard: List[List[InlineKeyboardButton]],
+
+		**_kwargs: Any
 	):
 		self.inline_keyboard = inline_keyboard
 

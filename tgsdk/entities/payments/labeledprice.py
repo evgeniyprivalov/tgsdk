@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Any
+
 from tgsdk import TelegramEntity
 
 
@@ -17,7 +19,9 @@ class LabeledPrice(TelegramEntity):
 	def __init__(
 		self,
 		label: str,
-		amount: int
+		amount: int,
+
+		**_kwargs: Any
 	):
 		self.label = label
 		self.amount = amount

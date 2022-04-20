@@ -5,7 +5,8 @@
 
 from typing import (
 	Optional,
-	Dict
+	Dict,
+	Any
 )
 
 from tgsdk import TelegramEntity
@@ -27,7 +28,9 @@ class ChatInviteLink(TelegramEntity):
 		is_primary: bool,
 		is_revoked: bool,
 		expire_date: Optional[int] = None,
-		member_limit: Optional[int] = None
+		member_limit: Optional[int] = None,
+
+		**_kwargs: Any
 	):
 		self.invite_link = invite_link
 		self.creator = creator

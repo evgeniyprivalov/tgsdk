@@ -7,7 +7,8 @@ from typing import (
 	Optional,
 	List,
 	Dict,
-	Union
+	Union,
+	Any
 )
 
 from tgsdk import TelegramEntity
@@ -25,7 +26,9 @@ class UserProfilePhotos(TelegramEntity):
 	def __init__(
 		self,
 		total_count: int,
-		photos: List[List[PhotoSize]]
+		photos: List[List[PhotoSize]],
+
+		**_kwargs: Any
 	):
 		self.total_count = total_count
 		self.photos = photos

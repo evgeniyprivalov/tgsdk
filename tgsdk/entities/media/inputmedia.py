@@ -6,7 +6,8 @@
 from typing import (
 	Union,
 	Dict,
-	List
+	List,
+	Any
 )
 
 from tgsdk import (
@@ -21,7 +22,9 @@ class InputMedia(TelegramEntity):
 	def __init__(
 		self,
 		type: str,
-		caption_entities: Union[List[MessageEntity], None]
+		caption_entities: Union[List[MessageEntity], None],
+
+		**_kwargs: Any
 	):
 		self.type = type
 		self.caption_entities = caption_entities

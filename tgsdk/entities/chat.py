@@ -57,6 +57,7 @@ class Chat(TelegramEntity):
 		can_set_sticker_set: Optional[bool] = None,
 		linked_chat_id: Optional[int] = None,
 		location: Optional[ChatLocation] = None,
+
 		**_kwargs: Any
 	):
 		self.id = id

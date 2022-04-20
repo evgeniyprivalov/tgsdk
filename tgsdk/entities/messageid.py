@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Any
+
 from tgsdk import TelegramEntity
 
 
@@ -17,5 +19,7 @@ class MessageId(TelegramEntity):
 	def __init__(
 		self,
 		message_id: int,
+
+		**_kwargs: Any
 	):
 		self.message_id = message_id

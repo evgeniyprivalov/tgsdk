@@ -7,7 +7,8 @@ from typing import (
 	Optional,
 	Dict,
 	Union,
-	List
+	List,
+	Any
 )
 
 from tgsdk import (
@@ -30,7 +31,9 @@ class EncryptedPassportElement(TelegramEntity):
 		reverse_side: Optional[PassportFile] = None,
 		selfie: Optional[PassportFile] = None,
 		translation: Optional[List[PassportFile]] = None,
-		hash: Optional[str] = None
+		hash: Optional[str] = None,
+
+		**_kwargs: Any
 	):
 		self.type = type
 		self.data = data

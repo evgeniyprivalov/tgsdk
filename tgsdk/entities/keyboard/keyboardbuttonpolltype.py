@@ -3,7 +3,10 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import Optional
+from typing import (
+	Optional,
+	Any
+)
 
 from tgsdk import TelegramEntity
 
@@ -19,6 +22,8 @@ class KeyboardButtonPollType(TelegramEntity):
 
 	def __init__(
 		self,
-		type: Optional[str] = None
+		type: Optional[str] = None,
+
+		**_kwargs: Any
 	):
 		self.type = type

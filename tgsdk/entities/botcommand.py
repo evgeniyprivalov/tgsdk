@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Any
+
 from tgsdk import TelegramEntity
 
 
@@ -16,7 +18,9 @@ class BotCommand(TelegramEntity):
 	def __init__(
 		self,
 		command: str,
-		description: str
+		description: str,
+
+		**_kwargs: Any
 	):
 		self.command = command
 		self.description = description

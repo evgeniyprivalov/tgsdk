@@ -5,7 +5,8 @@
 
 from typing import (
 	Optional,
-	Dict
+	Dict,
+	Any
 )
 
 from tgsdk import TelegramEntity
@@ -57,7 +58,9 @@ class ChatMember(TelegramEntity):
 		can_send_other_messages: Optional[bool] = None,
 		can_add_web_page_previews: Optional[bool] = None,
 		can_manage_video_chats: Optional[bool] = None,
-		until_date: Optional[int] = None
+		until_date: Optional[int] = None,
+
+		**_kwargs: Any
 	):
 		self.user = user
 		self.status = status

@@ -6,7 +6,8 @@
 from typing import (
 	Optional,
 	Dict,
-	Union
+	Union,
+	Any
 )
 
 from tgsdk import (
@@ -28,7 +29,9 @@ class OrderInfo(TelegramEntity):
 		name: Optional[str] = None,
 		phone_number: Optional[str] = None,
 		email: Optional[str] = None,
-		shipping_address: Optional[ShippingAddress] = None
+		shipping_address: Optional[ShippingAddress] = None,
+
+		**_kwargs: Any
 	):
 		self.name = name
 		self.phone_number = phone_number

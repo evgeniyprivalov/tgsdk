@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Any
+
 from tgsdk import TelegramEntity
 
 
@@ -18,7 +20,9 @@ class AnswerPreCheckoutQuery(TelegramEntity):
 		self,
 		pre_checkout_query_id: str,
 		ok: bool,
-		error_message: str
+		error_message: str,
+
+		**_kwargs: Any
 	):
 		self.pre_checkout_query_id = pre_checkout_query_id
 		self.ok = ok
