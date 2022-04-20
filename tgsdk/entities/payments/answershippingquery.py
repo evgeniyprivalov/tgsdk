@@ -7,7 +7,8 @@ from typing import (
 	List,
 	Optional,
 	Dict,
-	Union
+	Union,
+	Any
 )
 
 from tgsdk import ShippingOption
@@ -26,7 +27,9 @@ class AnswerShippingQuery(TelegramEntity):
 		shipping_query_id: str,
 		ok: bool,
 		shipping_options: List[ShippingOption],
-		error_message: str
+		error_message: str,
+
+		**_kwargs: Any
 	):
 		self.shipping_query_id = shipping_query_id
 		self.ok = ok

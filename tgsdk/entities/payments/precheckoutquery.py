@@ -34,6 +34,7 @@ class PreCheckoutQuery(TelegramEntity):
 		invoice_payload: str,
 		shipping_option_id: Optional[str] = None,
 		order_info: Optional[OrderInfo] = None,
+
 		**_kwargs: Any
 	):
 		self.id = id

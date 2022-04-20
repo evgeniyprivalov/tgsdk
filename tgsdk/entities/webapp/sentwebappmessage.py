@@ -3,7 +3,10 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import Optional
+from typing import (
+	Optional,
+	Any
+)
 
 from tgsdk import TelegramEntity
 
@@ -15,6 +18,8 @@ class SentWebAppMessage(TelegramEntity):
 
 	def __init__(
 		self,
-		inline_message_id: Optional[str] = None
+		inline_message_id: Optional[str] = None,
+
+		**_kwargs: Any
 	):
 		self.inline_message_id = inline_message_id

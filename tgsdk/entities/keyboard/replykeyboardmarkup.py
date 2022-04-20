@@ -7,7 +7,8 @@ from typing import (
 	Optional,
 	Dict,
 	List,
-	Union
+	Union,
+	Any
 )
 
 from .keyboardbutton import KeyboardButton
@@ -27,7 +28,9 @@ class ReplyKeyboardMarkup(ReplyMarkup):
 		resize_keyboard: Optional[bool] = False,
 		one_time_keyboard: Optional[bool] = False,
 		input_field_placeholder: Optional[str] = None,
-		selective: Optional[bool] = False
+		selective: Optional[bool] = False,
+
+		**_kwargs: Any
 	):
 		self.keyboard = self.set_keyboard(keyboard)
 		self.resize_keyboard = resize_keyboard

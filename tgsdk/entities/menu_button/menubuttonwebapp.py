@@ -5,7 +5,7 @@
 
 from typing import (
 	Optional,
-	Dict
+	Any
 )
 
 from tgsdk import (
@@ -27,7 +27,9 @@ class MenuButtonWebApp(MenuButton):
 		self,
 		text: str,
 		web_app: WebAppInfo,
-		type: Optional[str] = "web_app"
+		type: Optional[str] = "web_app",
+
+		**_kwargs: Any
 	):
 		self.type = type
 		self.text = text

@@ -6,7 +6,8 @@
 from typing import (
 	Optional,
 	Dict,
-	Union
+	Union,
+	Any
 )
 
 from tgsdk import TelegramEntity
@@ -28,7 +29,9 @@ class MessageEntity(TelegramEntity):
 		length: int,
 		url: Optional[str] = None,
 		user: Optional[User] = None,
-		language: Optional[str] = None
+		language: Optional[str] = None,
+
+		**_kwargs: Any
 	):
 		self.type = type
 		self.offset = offset

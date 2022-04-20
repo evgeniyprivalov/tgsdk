@@ -33,6 +33,7 @@ class InputMediaDocument(InputMedia):
 		caption_entities: Optional[List[MessageEntity]] = None,
 		disable_content_type_detection: Optional[bool] = None,
 		file_name: Optional[str] = None,
+
 		**_kwargs: Any
 	):
 		super().__init__(

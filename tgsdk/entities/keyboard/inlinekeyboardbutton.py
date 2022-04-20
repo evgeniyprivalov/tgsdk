@@ -5,7 +5,8 @@
 
 from typing import (
 	TYPE_CHECKING,
-	Optional
+	Optional,
+	Any
 )
 
 from tgsdk import (
@@ -36,7 +37,9 @@ class InlineKeyboardButton(TelegramEntity):
 		switch_inline_query: Optional[str] = None,
 		switch_inline_query_current_chat: Optional[str] = None,
 		pay: Optional[bool] = None,
-		login_url: Optional["LoginUrl"] = None
+		login_url: Optional["LoginUrl"] = None,
+
+		**_kwargs: Any
 	):
 		self.text = text
 		self.callback_data = callback_data

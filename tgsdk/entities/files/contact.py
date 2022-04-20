@@ -5,7 +5,8 @@
 
 from typing import (
 	Union,
-	Optional
+	Optional,
+	Any
 )
 
 from tgsdk import TelegramEntity
@@ -24,7 +25,9 @@ class Contact(TelegramEntity):
 		first_name: str,
 		user_id: Optional[Union[str, int]] = None,
 		last_name: Optional[str] = None,
-		vcard: Optional[str] = None
+		vcard: Optional[str] = None,
+
+		**_kwargs: Any
 	):
 		self.phone_number = phone_number
 		self.first_name = first_name

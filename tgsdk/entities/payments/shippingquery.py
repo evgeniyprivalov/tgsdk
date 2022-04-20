@@ -30,6 +30,7 @@ class ShippingQuery(TelegramEntity):
 		from_user: User,
 		invoice_payload: str,
 		shipping_address: ShippingAddress,
+
 		**_kwargs: Any
 	):
 		self.id = id

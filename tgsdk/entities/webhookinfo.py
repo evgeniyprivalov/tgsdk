@@ -4,6 +4,7 @@
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from typing import (
+	Any,
 	List,
 	Optional
 )
@@ -32,7 +33,9 @@ class WebhookInfo(TelegramEntity):
 		last_error_message: Optional[str] = None,
 		last_synchronization_error_date: Optional[int] = None,
 		max_connections: Optional[int] = None,
-		allowed_updates: Optional[List[str]] = None
+		allowed_updates: Optional[List[str]] = None,
+
+		**_kwargs: Any
 	):
 		self.url = url
 		self.has_custom_certificate = has_custom_certificate

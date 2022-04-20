@@ -29,6 +29,7 @@ class InputMediaPhoto(InputMedia):
 		parse_mode: Optional[str] = None,
 		caption_entities: Optional[List[MessageEntity]] = None,
 		file_name: Optional[str] = None,
+
 		**_kwargs: Any
 	):
 		super().__init__(

@@ -33,6 +33,7 @@ class InputMediaAudio(InputMedia):
 		performer: Optional[int] = None,
 		title: Optional[str] = None,
 		file_name: Optional[str] = None,
+
 		**_kwargs: Any
 	):
 		super().__init__(

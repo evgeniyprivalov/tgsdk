@@ -33,6 +33,7 @@ class InputMediaAnimation(InputMedia):
 		height: Optional[int] = None,
 		duration: Optional[int] = None,
 		file_name: Optional[str] = None,
+
 		**_kwargs: Any
 	):
 		super().__init__(

@@ -7,7 +7,8 @@ from typing import (
 	TYPE_CHECKING,
 	Optional,
 	Union,
-	Dict
+	Dict,
+	Any
 )
 
 from tgsdk import TelegramEntity
@@ -36,7 +37,9 @@ class VideoNote(TelegramEntity):
 		thumb: Optional[PhotoSize] = None,
 		file_size: Optional[int] = None,
 
-		bot: Optional["Bot"] = None
+		bot: Optional["Bot"] = None,
+
+		**_kwargs: Any
 	):
 		self.file_id = file_id
 		self.file_unique_id = file_unique_id

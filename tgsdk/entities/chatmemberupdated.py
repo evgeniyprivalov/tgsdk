@@ -34,6 +34,7 @@ class ChatMemberUpdated(TelegramEntity):
 		old_chat_member: ChatMember,
 		new_chat_member: ChatMember,
 		invite_link: Optional[ChatInviteLink] = None,
+
 		**_kwargs: Any
 	):
 		self.chat = chat

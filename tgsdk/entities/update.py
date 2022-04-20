@@ -54,6 +54,7 @@ class Update(TelegramEntity):
 		# poll_answer: PollAnswer = None,
 		my_chat_member: Optional[ChatMemberUpdated] = None,
 		chat_member: Optional[ChatMemberUpdated] = None,
+
 		**_kwargs: Any
 	):
 		self.update_id = update_id

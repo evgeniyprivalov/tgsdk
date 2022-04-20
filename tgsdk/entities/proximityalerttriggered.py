@@ -6,7 +6,8 @@
 from typing import (
 	Optional,
 	Dict,
-	Union
+	Union,
+	Any
 )
 
 from tgsdk import TelegramEntity
@@ -25,7 +26,9 @@ class ProximityAlertTriggered(TelegramEntity):
 		self,
 		traveler: User,
 		watcher: User,
-		distance: int
+		distance: int,
+
+		**_kwargs: Any
 	):
 		self.traveler = traveler
 		self.watcher = watcher

@@ -3,6 +3,7 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Any
 from tgsdk import TelegramEntity
 
 
@@ -20,7 +21,9 @@ class ShippingAddress(TelegramEntity):
 		city: str,
 		street_line1: str,
 		street_line2: str,
-		post_code: str
+		post_code: str,
+
+		**_kwargs: Any
 	):
 		self.country_code = country_code
 		self.state = state

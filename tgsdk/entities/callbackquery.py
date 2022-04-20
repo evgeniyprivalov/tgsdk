@@ -6,7 +6,8 @@
 from typing import (
 	Optional,
 	Union,
-	Dict
+	Dict,
+	Any
 )
 
 from tgsdk import (
@@ -33,6 +34,8 @@ class CallbackQuery(TelegramEntity):
 		inline_message_id: Optional[str] = None,
 		data: Optional[str] = None,
 		# game_short_name: str = None
+
+		**_kwargs: Any
 	):
 		self.id = id
 		self.from_user = from_user

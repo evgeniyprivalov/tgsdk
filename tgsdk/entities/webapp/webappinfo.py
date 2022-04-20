@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Any
+
 from tgsdk import TelegramEntity
 
 
@@ -13,7 +15,9 @@ class WebAppInfo(TelegramEntity):
 
 	def __init__(
 		self,
-		url: str
+		url: str,
+
+		**_kwargs: Any
 	):
 		self.url = url
 		if not self.url:

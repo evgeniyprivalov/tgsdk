@@ -3,7 +3,10 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import Optional
+from typing import (
+	Optional,
+	Any
+)
 
 from tgsdk import (
 	TelegramEntity,
@@ -28,7 +31,9 @@ class KeyboardButton(TelegramEntity):
 		request_contact: Optional[bool] = None,
 		request_location: Optional[bool] = None,
 		request_poll: Optional[KeyboardButtonPollType] = None,
-		web_app: Optional[WebAppInfo] = None
+		web_app: Optional[WebAppInfo] = None,
+
+		**_kwargs: Any
 	):
 		self.text = text
 		self.request_contact = request_contact

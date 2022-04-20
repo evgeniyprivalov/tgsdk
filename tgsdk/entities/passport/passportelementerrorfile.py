@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Any
+
 from tgsdk import PassportElementError
 
 
@@ -20,7 +22,9 @@ class PassportElementErrorFile(PassportElementError):
 		source: str,
 		type: str,
 		file_hash: str,
-		message: str
+		message: str,
+
+		**_kwargs: Any
 	):
 		self.source = source
 		self.type = type

@@ -10,7 +10,8 @@ from typing import (
 	IO,
 	Optional,
 	Union,
-	Tuple
+	Tuple,
+	Any
 )
 
 from tgsdk import TelegramEntity
@@ -28,7 +29,9 @@ class InputFile(TelegramEntity):
 		self,
 		file: Union[bytes, IO],
 		file_name: Optional[str] = None,
-		as_attach: Optional[bool] = None
+		as_attach: Optional[bool] = None,
+
+		**_kwargs: Any
 	):
 		self.as_attach = bool(as_attach)
 

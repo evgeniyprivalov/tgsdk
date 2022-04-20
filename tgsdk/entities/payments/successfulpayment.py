@@ -6,7 +6,8 @@
 from typing import (
 	Optional,
 	Dict,
-	Union
+	Union,
+	Any
 )
 
 from tgsdk import (
@@ -33,7 +34,9 @@ class SuccessfulPayment(TelegramEntity):
 		telegram_payment_charge_id: str,
 		provider_payment_charge_id: str,
 		shipping_option_id: Optional[str] = None,
-		order_info: Optional[OrderInfo] = None
+		order_info: Optional[OrderInfo] = None,
+
+		**_kwargs: Any
 	):
 		self.currency = currency
 		self.total_amount = total_amount

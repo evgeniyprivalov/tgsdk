@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Any
+
 from tgsdk import TelegramEntity
 
 
@@ -19,7 +21,9 @@ class Invoice(TelegramEntity):
 		description: str,
 		start_parameter: str,
 		currency: str,
-		total_amount: int
+		total_amount: int,
+
+		**_kwargs: Any
 	):
 		self.title = title
 		self.description = description

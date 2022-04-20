@@ -5,7 +5,7 @@
 
 from typing import (
 	Optional,
-	Dict
+	Any
 )
 
 from tgsdk import MenuButton
@@ -22,6 +22,8 @@ class MenuButtonDefault(MenuButton):
 
 	def __init__(
 		self,
-		type: Optional[str] = "default"
+		type: Optional[str] = "default",
+
+		**_kwargs: Any
 	):
 		self.type = type

@@ -3,6 +3,8 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
+from typing import Any
+
 from tgsdk import TelegramEntity
 
 
@@ -19,7 +21,9 @@ class PassportFile(TelegramEntity):
 		file_id: str,
 		file_unique_id: str,
 		file_size: int,
-		file_date: int
+		file_date: int,
+
+		**_kwargs: Any
 	):
 		self.file_id = file_id
 		self.file_unique_id = file_unique_id

@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 - 
 
+## [1.1.1] - 2022-04-18
+### Added
+### Changed
+- Add attributes `_**kwargs: Any` for all entities where it is not exist
+### Removed
+
+
 ## [1.1.0] - 2022-04-18
 ### Added
 - New Entities:

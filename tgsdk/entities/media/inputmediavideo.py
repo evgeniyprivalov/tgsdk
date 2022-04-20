@@ -34,6 +34,7 @@ class InputMediaVideo(InputMedia):
 		duration: Optional[int] = None,
 		supports_streaming: Optional[bool] = None,
 		file_name: Optional[str] = None,
+
 		**_kwargs: Any
 	):
 		super().__init__(
