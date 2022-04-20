@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 - 
 
+## [1.1.2] - 2022-04-21
+### Added
+### Changed
+- Fix method `answer_pre_checkout_query` of the entity `Bot`
+### Removed
+
+
 ## [1.1.1] - 2022-04-18
 ### Added
 ### Changed

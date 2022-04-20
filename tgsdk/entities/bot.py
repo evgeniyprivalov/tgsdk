@@ -2483,7 +2483,7 @@ class Bot(TelegramEntity):
 			payload["error_message"] = error_message
 
 		return self._post(
-			"answerShippingQuery",
+			"answerPreCheckoutQuery",
 			payload=payload,
 			timeout=timeout,
 			kwargs=kwargs
