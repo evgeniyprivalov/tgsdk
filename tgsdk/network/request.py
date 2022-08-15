@@ -11,6 +11,7 @@ except ImportError:
 import platform
 import socket
 from typing import (
+	Optional,
 	Union,
 	Dict
 )
@@ -54,9 +55,9 @@ class Request(object):
 
 	def __init__(
 		self,
-		conn_pool_size: int = 1,
-		connect_timeout: float = 5.0,
-		read_timeout: float = 3.0
+		conn_pool_size: Optional[int] = 1,
+		connect_timeout: Optional[float] = 5.0,
+		read_timeout: Optional[float] = 3.0
 	):
 		self._conn_pool_size = conn_pool_size
 		self._connect_timeout = connect_timeout
@@ -99,8 +100,8 @@ class Request(object):
 	@staticmethod
 	def parse(body: bytes) -> Union[Dict, bool]:
 		"""
-		
-		:param body:
+
+		:param bytes body:
 		:return: 
 		"""
 		try:
@@ -178,7 +179,7 @@ class Request(object):
 
 		raise NetworkError("(%s) %s" % (response.status, error_message))
 
-	def post(self, url: str, payload: Dict, timeout: float = 5.0) -> Union[Dict, bool]:
+	def post(self, url: str, payload: Dict, timeout: Optional[float] = 5.0) -> Union[Dict, bool]:
 		"""
 
 		:param str url:
