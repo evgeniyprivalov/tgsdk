@@ -20,6 +20,8 @@ def test__chatinvitelink__init():
 			first_name="first_name",
 			is_bot=False
 		),
+		name="Name",
+		creates_join_request=True,
 		is_primary=True,
 		is_revoked=False,
 		expire_date=1203,
@@ -32,6 +34,8 @@ def test__chatinvitelink__init():
 	assert _.creator.first_name == "first_name"
 	assert _.creator.is_bot is False
 
+	assert _.name == "Name"
+	assert _.creates_join_request is True
 	assert _.is_primary is True
 	assert _.is_revoked is False
 	assert _.expire_date == 1203
@@ -46,6 +50,8 @@ def test__chatinvitelink__to_dict():
 			first_name="first_name",
 			is_bot=False
 		),
+		name="Name",
+		creates_join_request=True,
 		is_primary=True,
 		is_revoked=False,
 		expire_date=1203,
@@ -61,6 +67,8 @@ def test__chatinvitelink__to_dict():
 				"first_name": "first_name",
 				"is_bot": False
 			},
+			"name": "Name",
+			"creates_join_request": True,
 			"is_primary": True,
 			"is_revoked": False,
 			"expire_date": 1203,
@@ -77,6 +85,8 @@ def test__chatinvitelink__to_json():
 			first_name="first_name",
 			is_bot=False
 		),
+		name="Name",
+		creates_join_request=True,
 		is_primary=True,
 		is_revoked=False,
 		expire_date=1203,
@@ -92,6 +102,8 @@ def test__chatinvitelink__to_json():
 				"first_name": "first_name",
 				"is_bot": False
 			},
+			"name": "Name",
+			"creates_join_request": True,
 			"is_primary": True,
 			"is_revoked": False,
 			"expire_date": 1203,
@@ -108,6 +120,8 @@ def test__chatinvitelink__de_json():
 			"first_name": "first_name",
 			"is_bot": False
 		},
+		"name": "Name",
+		"creates_join_request": True,
 		"is_primary": True,
 		"is_revoked": False,
 		"expire_date": 1203,
@@ -123,6 +137,8 @@ def test__chatinvitelink__de_json():
 	assert _.creator.first_name == "first_name"
 	assert _.creator.is_bot is False
 
+	assert _.name == "Name"
+	assert _.creates_join_request is True
 	assert _.is_primary is True
 	assert _.is_revoked is False
 	assert _.expire_date == 1203

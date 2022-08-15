@@ -15,11 +15,14 @@ from tgsdk import User
 
 class ChatInviteLink(TelegramEntity):
 	"""
-	https://core.telegram.org/bots/api#chatmember
+	https://core.telegram.org/bots/api#chatinvitelink
 
 	"""
 
-	__slots__ = ("invite_link", "creator", "is_primary", "is_revoked", "expire_date", "member_limit")
+	__slots__ = (
+		"invite_link", "creator", "is_primary", "is_revoked", "expire_date", "member_limit",
+		"creates_join_request", "name", "pending_join_request_count"
+	)
 
 	def __init__(
 		self,
@@ -27,8 +30,11 @@ class ChatInviteLink(TelegramEntity):
 		creator: User,
 		is_primary: bool,
 		is_revoked: bool,
+		name: Optional[str] = None,
+		creates_join_request: Optional[bool] = False,
 		expire_date: Optional[int] = None,
 		member_limit: Optional[int] = None,
+		pending_join_request_count: Optional[int] = None,
 
 		**_kwargs: Any
 	):
@@ -38,6 +44,9 @@ class ChatInviteLink(TelegramEntity):
 		self.is_revoked = is_revoked
 		self.expire_date = expire_date
 		self.member_limit = member_limit
+		self.creates_join_request = creates_join_request
+		self.name = name
+		self.pending_join_request_count = pending_join_request_count
 
 	@classmethod
 	def de_json(cls, data: Optional[Dict] = None):

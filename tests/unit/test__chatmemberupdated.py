@@ -96,6 +96,8 @@ def test__chatmemberupdate__to_dict():
 				first_name="user2",
 				is_bot=False
 			),
+			name="Name",
+			creates_join_request=True,
 			is_primary=True,
 			is_revoked=False
 		),
@@ -138,6 +140,8 @@ def test__chatmemberupdate__to_dict():
 					"first_name": "user2",
 					"is_bot": False
 				},
+				"name": "Name",
+				"creates_join_request": True,
 				"is_primary": True,
 				"is_revoked": False
 			},
@@ -181,6 +185,8 @@ def test__chatmemberupdate__to_json():
 				first_name="user2",
 				is_bot=False
 			),
+			name="Name",
+			creates_join_request=True,
 			is_primary=True,
 			is_revoked=False
 		),
@@ -223,6 +229,8 @@ def test__chatmemberupdate__to_json():
 					"first_name": "user2",
 					"is_bot": False
 				},
+				"name": "Name",
+				"creates_join_request": True,
 				"is_primary": True,
 				"is_revoked": False
 			},
