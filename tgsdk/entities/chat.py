@@ -29,7 +29,9 @@ class Chat(TelegramEntity):
 	__slots__ = (
 		"id", "type", "title", "username", "first_name", "last_name", "photo", "bio", "description", "invite_link",
 		"pinned_message", "permissions", "slow_mode_delay", "message_auto_delete_time", "sticker_set_name",
-		"can_set_sticker_set", "linked_chat_id", "location", "all_members_are_administrators"
+		"can_set_sticker_set", "linked_chat_id", "location", "all_members_are_administrators",
+		"has_restricted_voice_and_video_messages", "has_private_forwards", "join_to_send_messages",
+		"join_by_request", "has_protected_content"
 	)
 
 	PRIVATE = constants.CHAT_PRIVATE  # type: str
@@ -57,6 +59,11 @@ class Chat(TelegramEntity):
 		can_set_sticker_set: Optional[bool] = None,
 		linked_chat_id: Optional[int] = None,
 		location: Optional[ChatLocation] = None,
+		has_private_forwards: Optional[bool] = None,
+		has_restricted_voice_and_video_messages: Optional[bool] = None,
+		join_to_send_messages: Optional[bool] = None,
+		join_by_request: Optional[bool] = None,
+		has_protected_content: Optional[bool] = None,
 
 		**_kwargs: Any
 	):
@@ -78,6 +85,11 @@ class Chat(TelegramEntity):
 		self.can_set_sticker_set = can_set_sticker_set
 		self.linked_chat_id = linked_chat_id
 		self.location = location
+		self.has_restricted_voice_and_video_messages = has_restricted_voice_and_video_messages
+		self.has_private_forwards = has_private_forwards
+		self.join_to_send_messages = join_to_send_messages
+		self.join_by_request = join_by_request
+		self.has_protected_content = has_protected_content
 
 		# TODO:
 		self.all_members_are_administrators = _kwargs.get("all_members_are_administrators")

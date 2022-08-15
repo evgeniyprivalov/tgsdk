@@ -1663,25 +1663,27 @@ class Bot(TelegramEntity):
 	def set_webhook(
 		self,
 		url: str,
-		certificate: InputFile = None,
-		max_connections: int = 50,
+		certificate: Optional[InputFile] = None,
+		max_connections: Optional[int] = 50,
 		allowed_updates: List[str] = None,
-		ip_address: str = None,
-		drop_pending_updates: bool = None,
-		timeout: float = None,
-		kwargs: Dict = None
+		ip_address: Optional[str] = None,
+		drop_pending_updates: Optional[bool] = None,
+		secret_token: Optional[str] = None,
+		timeout: Optional[float] = None,
+		kwargs: Optional[Dict] = None
 	) -> bool:
 		"""
 		https://core.telegram.org/bots/api#setwebhook
 
-		:param url:
-		:param certificate:
-		:param max_connections:
-		:param allowed_updates:
-		:param ip_address:
-		:param drop_pending_updates:
-		:param timeout:
-		:param kwargs:
+		:param str secret_token:
+		:param str url:
+		:param InputFile certificate:
+		:param int max_connections:
+		:param list allowed_updates:
+		:param str ip_address:
+		:param bool drop_pending_updates:
+		:param float timeout:
+		:param dict kwargs:
 		:return:
 		"""
 		payload = {
@@ -1709,6 +1711,9 @@ class Bot(TelegramEntity):
 
 		if drop_pending_updates is not None:
 			payload["drop_pending_updates"] = drop_pending_updates
+
+		if secret_token is not None:
+			payload["secret_token"] = secret_token
 
 		return self._post("setWebhook", payload=payload, timeout=timeout, kwargs=kwargs)
 
@@ -2205,8 +2210,10 @@ class Bot(TelegramEntity):
 	def create_chat_invite_link(
 		self,
 		chat_id: ID,
+		name: Optional[str] = None,
 		expire_date: Optional[int] = None,
 		member_limit: Optional[int] = None,
+		creates_join_request: Optional[bool] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> ChatInviteLink:
@@ -2227,6 +2234,12 @@ class Bot(TelegramEntity):
 
 			payload["member_limit"] = member_limit
 
+		if name is not None:
+			payload["name"] = name
+
+		if creates_join_request is not None:
+			payload["creates_join_request"] = creates_join_request
+
 		_result = self._post(
 			"createChatInviteLink",
 			payload,
@@ -2239,8 +2252,10 @@ class Bot(TelegramEntity):
 		self,
 		chat_id: ID,
 		invite_link: str,
+		name: Optional[str] = None,
 		expire_date: Optional[int] = None,
 		member_limit: Optional[int] = None,
+		creates_join_request: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> ChatInviteLink:
@@ -2261,6 +2276,12 @@ class Bot(TelegramEntity):
 				member_limit = 99999
 
 			payload["member_limit"] = member_limit
+
+		if name is not None:
+			payload["name"] = name
+
+		if creates_join_request is not None:
+			payload["creates_join_request"] = creates_join_request
 
 		_result = self._post(
 			"editChatInviteLink",
@@ -2294,11 +2315,103 @@ class Bot(TelegramEntity):
 		)
 		return ChatInviteLink.de_json(_result)
 
-	def pin_chat_message(self):
-		pass
+	def approve_chat_join_request(
+		self,
+		chat_id: ID,
+		user_id: ID,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#approvechatjoinrequest
 
-	def unpin_chat_message(self):
-		pass
+		"""
+		payload = {
+			"chat_id": self.build_chat_id(chat_id),
+			"user_id": user_id
+		}
+
+		return self._post(
+			"approveChatJoinRequest",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def decline_chat_join_request(
+		self,
+		chat_id: ID,
+		user_id: ID,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#declinechatjoinrequest
+
+		"""
+		payload = {
+			"chat_id": self.build_chat_id(chat_id),
+			"user_id": user_id
+		}
+
+		return self._post(
+			"declineChatJoinRequest",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def pin_chat_message(
+		self,
+		chat_id: ID,
+		message_id: ID,
+		disable_notification: Optional[bool] = None,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#pinchatmessage
+
+		"""
+		payload = {
+			"chat_id": self.build_chat_id(chat_id),
+			"message_id": message_id
+		}
+
+		if disable_notification is not None:
+			payload["disable_notification"] = disable_notification
+
+		return self._post(
+			"pinChatMessage",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def unpin_chat_message(
+		self,
+		chat_id: ID,
+		message_id: Optional[ID] = None,
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#unpinchatmessage
+
+		"""
+		payload = {
+			"chat_id": self.build_chat_id(chat_id)
+		}
+
+		if message_id is not None:
+			payload["message_id"] = message_id
+
+		return self._post(
+			"unpinChatMessage",
+			payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
 
 	def unpin_all_chat_messages(self):
 		pass
@@ -2574,7 +2687,12 @@ class Bot(TelegramEntity):
 			"commands": [command.to_dict() for command in commands]
 		}
 
-		return self._post("setMyCommands", payload=payload, timeout=timeout, kwargs=kwargs)
+		return self._post(
+			"setMyCommands",
+			payload=payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
 
 	def log_out(self) -> bool:
 		"""
