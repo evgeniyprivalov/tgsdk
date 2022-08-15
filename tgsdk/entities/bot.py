@@ -2422,7 +2422,7 @@ class Bot(TelegramEntity):
 		errors: [PassportElementError],
 		timeout: Optional[float] = None,
 		kwargs: Optional[Dict] = None
-	):
+	) -> bool:
 		"""
 		https://core.telegram.org/bots/api#setpassportdataerrors
 
@@ -2470,7 +2470,7 @@ class Bot(TelegramEntity):
 		reply_markup: Optional[InlineKeyboardMarkup] = None,
 		timeout: Optional[float] = None,
 		kwargs: Optional[Dict] = None
-	):
+	) -> bool:
 		"""
 		https://core.telegram.org/bots/api#sendinvoice
 
@@ -2552,7 +2552,7 @@ class Bot(TelegramEntity):
 		error_message: Optional[str] = None,
 		timeout: Optional[float] = None,
 		kwargs: Optional[Dict] = None
-	):
+	) -> bool:
 		"""
 		https://core.telegram.org/bots/api#answershippingquery
 
@@ -2582,7 +2582,7 @@ class Bot(TelegramEntity):
 		error_message: Optional[str] = None,
 		timeout: float = None,
 		kwargs: Dict = None
-	):
+	) -> bool:
 		"""
 		https://core.telegram.org/bots/api#answerprecheckoutquery
 

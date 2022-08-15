@@ -3,6 +3,6 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-__version__ = "1.1.4"
+__version__ = "1.1.6"
 
 __tg_version__ = "6.2"
