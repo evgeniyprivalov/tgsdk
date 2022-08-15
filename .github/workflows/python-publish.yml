@@ -27,5 +27,6 @@ jobs:
           TWINE_USERNAME: ${{ secrets.CI_PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.CI_PYPI_PASSWORD }}
         run: |
+          rm -rf dist build *.egg-info
           python setup.py sdist bdist_wheel
           twine upload --skip-existing --repository pypi dist/* --verbose
