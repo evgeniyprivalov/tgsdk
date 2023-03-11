@@ -3,17 +3,11 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	TYPE_CHECKING,
-	Optional,
-	Any
-)
+from typing import TYPE_CHECKING, Any, Optional
 
-from tgsdk import (
-	ChatPhoto,
-	TelegramEntity,
-)
+from tgsdk import ChatPhoto, TelegramEntity
 from tgsdk.utils import constants
+
 from .chatlocation import ChatLocation
 from .chatpermissions import ChatPermissions
 
@@ -31,7 +25,7 @@ class Chat(TelegramEntity):
 		"pinned_message", "permissions", "slow_mode_delay", "message_auto_delete_time", "sticker_set_name",
 		"can_set_sticker_set", "linked_chat_id", "location", "all_members_are_administrators",
 		"has_restricted_voice_and_video_messages", "has_private_forwards", "join_to_send_messages",
-		"join_by_request", "has_protected_content"
+		"join_by_request", "has_protected_content", "has_hidden_members", "has_aggressive_anti_spam_enabled", "is_forum"
 	)
 
 	PRIVATE = constants.CHAT_PRIVATE  # type: str
@@ -64,6 +58,9 @@ class Chat(TelegramEntity):
 		join_to_send_messages: Optional[bool] = None,
 		join_by_request: Optional[bool] = None,
 		has_protected_content: Optional[bool] = None,
+		has_hidden_members: Optional[bool] = None,
+		has_aggressive_anti_spam_enabled: Optional[bool] = None,
+		is_forum: Optional[bool] = None,
 
 		**_kwargs: Any
 	):
@@ -90,6 +87,9 @@ class Chat(TelegramEntity):
 		self.join_to_send_messages = join_to_send_messages
 		self.join_by_request = join_by_request
 		self.has_protected_content = has_protected_content
+		self.has_hidden_members = has_hidden_members
+		self.has_aggressive_anti_spam_enabled = has_aggressive_anti_spam_enabled
+		self.is_forum = is_forum
 
 		# TODO:
 		self.all_members_are_administrators = _kwargs.get("all_members_are_administrators")

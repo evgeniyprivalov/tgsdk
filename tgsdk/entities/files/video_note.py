@@ -3,22 +3,14 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	TYPE_CHECKING,
-	Optional,
-	Union,
-	Dict,
-	Any
-)
+from typing import TYPE_CHECKING, Any, Dict, Optional, Union
 
 from tgsdk import TelegramEntity
+
 from .photosize import PhotoSize
 
 if TYPE_CHECKING:
-	from tgsdk import (
-		Bot,
-		File
-	)
+	from tgsdk import Bot, File
 
 
 class VideoNote(TelegramEntity):
@@ -26,7 +18,7 @@ class VideoNote(TelegramEntity):
 	https://core.telegram.org/bots/api#videonote
 
 	"""
-	__slots__ = ("file_id", "file_unique_id", "length", "duration", "thumb", "file_size", "bot")
+	__slots__ = ("file_id", "file_unique_id", "length", "duration", "thumbnail", "file_size", "bot")
 
 	def __init__(
 		self,
@@ -34,7 +26,7 @@ class VideoNote(TelegramEntity):
 		file_unique_id: str,
 		length: int,
 		duration: int,
-		thumb: Optional[PhotoSize] = None,
+		thumbnail: Optional[PhotoSize] = None,
 		file_size: Optional[int] = None,
 
 		bot: Optional["Bot"] = None,
@@ -45,7 +37,7 @@ class VideoNote(TelegramEntity):
 		self.file_unique_id = file_unique_id
 		self.length = length
 		self.duration = duration
-		self.thumb = thumb
+		self.thumbnail = thumbnail
 		self.file_size = file_size
 
 		self.bot = bot
@@ -60,7 +52,7 @@ class VideoNote(TelegramEntity):
 		if not data:
 			return None
 
-		data["thumb"] = PhotoSize.de_json(data.get("thumb"))
+		data["thumbnail"] = PhotoSize.de_json(data.get("thumbnail"))
 
 		return cls(**data)
 

@@ -3,44 +3,34 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	TYPE_CHECKING,
-	Optional,
-	List,
-	Union,
-	Dict,
-	Any
-)
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
 from tgsdk import (
-	Animation,
-	Audio,
-	Chat,
-	Contact,
-	Document,
-	InlineKeyboardMarkup,
-	MessageEntity,
-	Location,
-	PhotoSize,
-	Sticker,
-	User,
-	Venue,
-	Video,
-	VideoNote,
-	Voice,
-	Invoice,
-	PassportData,
-	SuccessfulPayment,
-	ProximityAlertTriggered,
-	WebAppData
+    Animation,
+    Audio,
+    Chat,
+    Contact,
+    Document,
+    InlineKeyboardMarkup,
+    Invoice,
+    Location,
+    MessageEntity,
+    PassportData,
+    PhotoSize,
+    ProximityAlertTriggered,
+    Sticker,
+    SuccessfulPayment,
+    TelegramEntity,
+    User,
+    Venue,
+    Video,
+    VideoNote,
+    Voice,
+    WebAppData,
 )
-from tgsdk import TelegramEntity
 
 if TYPE_CHECKING:
-	from tgsdk import (
-		Bot,
-		InputMedia
-	)
+	from tgsdk import Bot, InputMedia
 
 
 class Message(TelegramEntity):
@@ -55,7 +45,8 @@ class Message(TelegramEntity):
 		"animation", "audio", "document", "photo", "bot", "sticker", "video", "video_note", "voice", "caption", "caption_entities", "contact", "venue",
 		"location", "new_chat_members", "left_chat_member", "new_chat_title", "new_chat_photo", "delete_chat_photo", "group_chat_created",
 		"supergroup_chat_created", "channel_chat_created", "migrate_to_chat_id", "migrate_from_chat_id", "pinned_message", "invoice", "successful_payment",
-		"connected_website", "passport_data", "proximity_alert_triggered", "web_app_data", "reply_markup", "has_protected_content"
+		"connected_website", "passport_data", "proximity_alert_triggered", "web_app_data", "reply_markup", "has_protected_content", "has_media_spoiler",
+		"is_topic_message", "message_thread_id"
 	)
 
 	def __init__(
@@ -118,6 +109,9 @@ class Message(TelegramEntity):
 		web_app_data: Optional[WebAppData] = None,
 		reply_markup: Optional[InlineKeyboardMarkup] = None,
 		has_protected_content: Optional[bool] = None,
+		has_media_spoiler: Optional[bool] = None,
+		is_topic_message: Optional[bool] = None,
+		message_thread_id: Optional[int] = None,
 
 		bot: Optional["Bot"] = None,
 
@@ -173,6 +167,9 @@ class Message(TelegramEntity):
 		self.reply_markup = reply_markup
 		self.web_app_data = web_app_data
 		self.has_protected_content = has_protected_content
+		self.has_media_spoiler = has_media_spoiler
+		self.is_topic_message = is_topic_message
+		self.message_thread_id = message_thread_id
 
 		self.bot = bot
 

@@ -3,22 +3,12 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	TYPE_CHECKING,
-	Optional,
-	Dict,
-	Union,
-	Any
-)
+from typing import TYPE_CHECKING, Any, Dict, Optional, Union
 
-from tgsdk import PhotoSize
-from tgsdk import TelegramEntity
+from tgsdk import PhotoSize, TelegramEntity
 
 if TYPE_CHECKING:
-	from tgsdk import (
-		Bot,
-		File
-	)
+	from tgsdk import Bot, File
 
 
 class Document(TelegramEntity):
@@ -26,13 +16,13 @@ class Document(TelegramEntity):
 	https://core.telegram.org/bots/api#document
 
 	"""
-	__slots__ = ("file_id", "file_unique_id", "thumb", "file_name", "mime_type", "file_size", "bot")
+	__slots__ = ("file_id", "file_unique_id", "thumbnail", "file_name", "mime_type", "file_size", "bot")
 
 	def __init__(
 		self,
 		file_id: str,
 		file_unique_id: str,
-		thumb: Optional[PhotoSize] = None,
+		thumbnail: Optional[PhotoSize] = None,
 		file_name: Optional[str] = None,
 		mime_type: Optional[str] = None,
 		file_size: Optional[int] = None,
@@ -43,7 +33,7 @@ class Document(TelegramEntity):
 	):
 		self.file_id = file_id
 		self.file_unique_id = file_unique_id
-		self.thumb = thumb
+		self.thumbnail = thumbnail
 		self.file_name = file_name
 		self.mime_type = mime_type
 		self.file_size = file_size
@@ -60,7 +50,7 @@ class Document(TelegramEntity):
 		if not data:
 			return None
 
-		data["thumb"] = PhotoSize.de_json(data.get("thumb"))
+		data["thumbnail"] = PhotoSize.de_json(data.get("thumbnail"))
 
 		return cls(**data)
 

@@ -23,7 +23,7 @@ def test__sticker__init():
 	assert _.width == 100
 	assert _.height == 100
 	assert _.is_animated is True
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.emoji is None
 	assert _.set_name is None
 	assert _.mask_position is None
@@ -89,7 +89,7 @@ def test__document__de_json():
 	assert _.width == 100
 	assert _.height == 100
 	assert _.is_animated is True
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.emoji is None
 	assert _.set_name is None
 	assert _.mask_position is None

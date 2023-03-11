@@ -3,22 +3,12 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	TYPE_CHECKING,
-	Optional,
-	Dict,
-	Union,
-	Any
-)
+from typing import TYPE_CHECKING, Any, Dict, Optional, Union
 
-from tgsdk import PhotoSize
-from tgsdk import TelegramEntity
+from tgsdk import PhotoSize, TelegramEntity
 
 if TYPE_CHECKING:
-	from tgsdk import (
-		Bot,
-		File
-	)
+	from tgsdk import Bot, File
 
 
 class Audio(TelegramEntity):
@@ -26,7 +16,7 @@ class Audio(TelegramEntity):
 	https://core.telegram.org/bots/api#audio
 
 	"""
-	__slots__ = ("file_id", "file_unique_id", "duration", "performer", "title", "file_name", "mime_type", "file_size", "thumb", "bot")
+	__slots__ = ("file_id", "file_unique_id", "duration", "performer", "title", "file_name", "mime_type", "file_size", "thumbnail", "bot")
 
 	def __init__(
 		self,
@@ -38,7 +28,7 @@ class Audio(TelegramEntity):
 		file_name: Optional[str] = None,
 		mime_type: Optional[str] = None,
 		file_size: Optional[int] = None,
-		thumb: Optional[PhotoSize] = None,
+		thumbnail: Optional[PhotoSize] = None,
 
 		bot: Optional["Bot"] = None,
 
@@ -52,7 +42,7 @@ class Audio(TelegramEntity):
 		self.file_name = file_name
 		self.mime_type = mime_type
 		self.file_size = file_size
-		self.thumb = thumb
+		self.thumbnail = thumbnail
 		self.bot = bot
 
 	def get_file(self, timeout: float = None, kwargs: Dict = None) -> "File":
@@ -69,6 +59,6 @@ class Audio(TelegramEntity):
 		if not data:
 			return None
 
-		data["thumb"] = PhotoSize.de_json(data.get("thumb"))
+		data["thumbnail"] = PhotoSize.de_json(data.get("thumbnail"))
 
 		return cls(**data)

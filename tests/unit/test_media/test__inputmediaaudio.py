@@ -6,11 +6,9 @@
 import json
 import unittest
 
+from tgsdk import Audio, InputMediaAudio
 
-from tgsdk import InputMediaAudio, Audio
-
-
-# TODO: "media" as Bytes | IO AND "thumb"
+# TODO: "media" as Bytes | IO AND "thumbnail"
 
 def test__inputmediaaudio__init():
 	_ = InputMediaAudio(
@@ -27,7 +25,7 @@ def test__inputmediaaudio__init():
 	assert _.media == "file_id"
 
 	assert _.duration == 10
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.caption is None
 	assert _.parse_mode is None
 	assert _.caption_entities is None
@@ -90,7 +88,7 @@ def test__inputmediaaudio__de_json():
 	assert _.media == "file_id"
 
 	assert _.duration == 10
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.caption is None
 	assert _.parse_mode is None
 	assert _.caption_entities is None

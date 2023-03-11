@@ -3,13 +3,7 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	Optional,
-	Dict,
-	List,
-	Union,
-	Any
-)
+from typing import Any, Dict, List, Optional, Union
 
 from .keyboardbutton import KeyboardButton
 from .replymarkup import ReplyMarkup
@@ -20,11 +14,12 @@ class ReplyKeyboardMarkup(ReplyMarkup):
 	https://core.telegram.org/bots/api#replykeyboardmarkup
 
 	"""
-	__slots__ = ("keyboard", "resize_keyboard", "one_time_keyboard", "input_field_placeholder", "selective")
+	__slots__ = ("keyboard", "is_persistent", "resize_keyboard", "one_time_keyboard", "input_field_placeholder", "selective")
 
 	def __init__(
 		self,
 		keyboard: List[List[Union[str, KeyboardButton]]],
+		is_persistent: Optional[bool] = False,
 		resize_keyboard: Optional[bool] = False,
 		one_time_keyboard: Optional[bool] = False,
 		input_field_placeholder: Optional[str] = None,
@@ -33,6 +28,7 @@ class ReplyKeyboardMarkup(ReplyMarkup):
 		**_kwargs: Any
 	):
 		self.keyboard = self.set_keyboard(keyboard)
+		self.is_persistent = is_persistent
 		self.resize_keyboard = resize_keyboard
 		self.one_time_keyboard = one_time_keyboard
 

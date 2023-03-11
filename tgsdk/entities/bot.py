@@ -3,63 +3,52 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	Any,
-	TYPE_CHECKING,
-	Tuple,
-	Union,
-	List,
-	Optional,
-	Dict
-)
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Union
 
 from tgsdk import (
-	BotCommand,
-	MessageId,
-	InputFile,
-	PhotoSize,
-	Video,
-	VideoNote,
-	Audio,
-	Voice,
-	Sticker,
-	Contact,
-	Location,
-	Document,
-	ChatPhoto,
-	ChatMember,
-	ChatInviteLink,
-	UserProfilePhotos,
-	File,
-	Chat,
-	InlineKeyboardMarkup,
-	ChatPermissions,
-	User,
-	ReplyMarkup,
-	Message,
-	WebhookInfo,
-	MenuButton,
-	InlineQueryResult,
-	LabeledPrice,
-	ShippingOption,
-	PassportElementError
+    Audio,
+    BotCommand,
+    Chat,
+    ChatInviteLink,
+    ChatMember,
+    ChatPermissions,
+    ChatPhoto,
+    Contact,
+    Document,
+    File,
+    InlineKeyboardMarkup,
+    InlineQueryResult,
+    InputFile,
+    LabeledPrice,
+    Location,
+    MenuButton,
+    Message,
+    MessageId,
+    PassportElementError,
+    PhotoSize,
+    ReplyMarkup,
+    ShippingOption,
+    Sticker,
+    TelegramEntity,
+    User,
+    UserProfilePhotos,
+    Video,
+    VideoNote,
+    Voice,
+    WebhookInfo,
 )
-from tgsdk import TelegramEntity
 from tgsdk.network.request import Request
 from tgsdk.utils import constants
 from tgsdk.utils.get_input_file import get_input_file
-from tgsdk.utils.types import (
-	FileInput,
-	ID
-)
+from tgsdk.utils.types import ID, FileInput
 
 if TYPE_CHECKING:
 	from tgsdk import (
-		InputMedia,
-		InputMediaDocument,
-		InputMediaVideo,
-		InputMediaPhoto,
-		InputMediaAudio
+	    InputMedia,
+	    InputMediaAudio,
+	    InputMediaDocument,
+	    InputMediaPhoto,
+	    InputMediaVideo,
 	)
 
 
@@ -291,6 +280,7 @@ class Bot(TelegramEntity):
 		disable_notification: bool = None,
 		protect_content: bool = None,
 		allow_sending_without_reply: bool = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Union[Message, bool]:
@@ -306,6 +296,7 @@ class Bot(TelegramEntity):
 		:param disable_notification:
 		:param protect_content:
 		:param allow_sending_without_reply:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -327,6 +318,9 @@ class Bot(TelegramEntity):
 
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
 
 		return self._send(
 			"sendMessage",
@@ -369,6 +363,7 @@ class Bot(TelegramEntity):
 		message_id: ID,
 		disable_notification: bool = None,
 		protect_content: bool = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -380,6 +375,7 @@ class Bot(TelegramEntity):
 		:param message_id:
 		:param disable_notification:
 		:param protect_content:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -398,6 +394,9 @@ class Bot(TelegramEntity):
 
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
 
 		return self._send(
 			"forwardMessage",
@@ -419,6 +418,7 @@ class Bot(TelegramEntity):
 		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> MessageId:
@@ -435,6 +435,7 @@ class Bot(TelegramEntity):
 		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -466,6 +467,9 @@ class Bot(TelegramEntity):
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
 
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
+
 		if reply_markup:
 			payload["reply_markup"] = reply_markup.to_json()
 
@@ -484,6 +488,8 @@ class Bot(TelegramEntity):
 		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
+		has_spoiler: bool = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -500,6 +506,7 @@ class Bot(TelegramEntity):
 		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -520,6 +527,12 @@ class Bot(TelegramEntity):
 
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
+
+		if has_spoiler is not None:
+			payload["has_spoiler"] = has_spoiler
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
 
 		return self._send(
 			"sendPhoto",
@@ -547,7 +560,8 @@ class Bot(TelegramEntity):
 		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
-		thumb: InputFile = None,
+		thumbnail: InputFile = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -567,7 +581,8 @@ class Bot(TelegramEntity):
 		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
-		:param thumb:
+		:param thumbnail:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -595,11 +610,14 @@ class Bot(TelegramEntity):
 		if parse_mode:
 			payload["parse_mode"] = parse_mode
 
-		if thumb:
-			payload["thumb"] = get_input_file(thumb, as_attach=True)
+		if thumbnail:
+			payload["thumbnail"] = get_input_file(thumbnail, as_attach=True)
 
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
 
 		return self._send(
 			"sendAudio",
@@ -625,7 +643,8 @@ class Bot(TelegramEntity):
 		reply_to_message_id: ID = None,
 		disable_content_type_detection: bool = None,
 		allow_sending_without_reply: bool = None,
-		thumb: InputFile = None,
+		thumbnail: InputFile = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -643,7 +662,8 @@ class Bot(TelegramEntity):
 		:param reply_to_message_id:
 		:param disable_content_type_detection:
 		:param allow_sending_without_reply:
-		:param thumb:
+		:param thumbnail:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -662,14 +682,17 @@ class Bot(TelegramEntity):
 		if parse_mode:
 			payload["parse_mode"] = parse_mode
 
-		if thumb:
-			payload["thumb"] = thumb
+		if thumbnail:
+			payload["thumbnail"] = thumbnail
 
 		if disable_content_type_detection is not None:
 			payload["disable_content_type_detection"] = disable_content_type_detection
 
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
 
 		return self._send(
 			"sendDocument",
@@ -691,6 +714,7 @@ class Bot(TelegramEntity):
 		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -704,6 +728,7 @@ class Bot(TelegramEntity):
 		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -716,6 +741,9 @@ class Bot(TelegramEntity):
 
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
 
 		return self._send(
 			"sendSticker",
@@ -743,8 +771,10 @@ class Bot(TelegramEntity):
 		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		supports_streaming: bool = None,
-		thumb: InputFile = None,
+		thumbnail: InputFile = None,
 		allow_sending_without_reply: bool = None,
+		has_spoiler: bool = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -764,8 +794,10 @@ class Bot(TelegramEntity):
 		:param protect_content:
 		:param reply_to_message_id:
 		:param supports_streaming:
-		:param thumb:
+		:param has_spoiler:
+		:param thumbnail:
 		:param allow_sending_without_reply:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -800,8 +832,14 @@ class Bot(TelegramEntity):
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
 
-		if thumb:
-			payload["thumb"] = get_input_file(thumb, as_attach=True)
+		if has_spoiler is not None:
+			payload["has_spoiler"] = has_spoiler
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
+
+		if thumbnail:
+			payload["thumbnail"] = get_input_file(thumbnail, as_attach=True)
 
 		return self._send(
 			"sendVideo",
@@ -826,7 +864,8 @@ class Bot(TelegramEntity):
 		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
-		thumb: InputFile = None,
+		thumbnail: InputFile = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -843,7 +882,8 @@ class Bot(TelegramEntity):
 		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
-		:param thumb:
+		:param thumbnail:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -859,11 +899,14 @@ class Bot(TelegramEntity):
 		if length:
 			payload["length"] = length
 
-		if thumb:
-			payload["thumb"] = get_input_file(thumb, as_attach=True)
+		if thumbnail:
+			payload["thumbnail"] = get_input_file(thumbnail, as_attach=True)
 
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
 
 		return self._send(
 			"sendVideoNote",
@@ -889,6 +932,7 @@ class Bot(TelegramEntity):
 		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -906,6 +950,7 @@ class Bot(TelegramEntity):
 		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -930,6 +975,9 @@ class Bot(TelegramEntity):
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
 
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
+
 		return self._send(
 			"sendVoice",
 			payload,
@@ -949,6 +997,7 @@ class Bot(TelegramEntity):
 		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> List[Message]:
@@ -961,6 +1010,7 @@ class Bot(TelegramEntity):
 		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -981,6 +1031,9 @@ class Bot(TelegramEntity):
 
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
 
 		_result = self._post(
 			"sendMediaGroup",
@@ -1006,6 +1059,7 @@ class Bot(TelegramEntity):
 		heading: int = None,
 		proximity_alert_radius: int = None,
 		allow_sending_without_reply: bool = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -1025,6 +1079,7 @@ class Bot(TelegramEntity):
 		:param heading:
 		:param proximity_alert_radius:
 		:param allow_sending_without_reply:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -1061,6 +1116,9 @@ class Bot(TelegramEntity):
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
 
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
+
 		return self._send(
 			"sendLocation",
 			payload,
@@ -1091,6 +1149,7 @@ class Bot(TelegramEntity):
 		protect_content: bool = None,
 		reply_to_message_id: ID = None,
 		allow_sending_without_reply: bool = None,
+		message_thread_id: Optional[int] = None,
 		timeout: float = None,
 		kwargs: Dict = None
 	) -> Message:
@@ -1108,6 +1167,7 @@ class Bot(TelegramEntity):
 		:param protect_content:
 		:param reply_to_message_id:
 		:param allow_sending_without_reply:
+		:param message_thread_id:
 		:param timeout:
 		:param kwargs:
 		:return:
@@ -1133,6 +1193,9 @@ class Bot(TelegramEntity):
 
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
 
 		return self._send(
 			"sendContact",
@@ -2468,6 +2531,7 @@ class Bot(TelegramEntity):
 		reply_to_message_id: Optional[int] = None,
 		allow_sending_without_reply: Optional[bool] = None,
 		reply_markup: Optional[InlineKeyboardMarkup] = None,
+		message_thread_id: Optional[int] = None,
 		timeout: Optional[float] = None,
 		kwargs: Optional[Dict] = None
 	) -> bool:
@@ -2532,6 +2596,9 @@ class Bot(TelegramEntity):
 
 		if protect_content is not None:
 			payload["protect_content"] = protect_content
+
+		if message_thread_id is not None:
+			payload["message_thread_id"] = message_thread_id
 
 		return self._send(
 			"sendInvoice",
@@ -2709,3 +2776,113 @@ class Bot(TelegramEntity):
 		:return:
 		"""
 		return self._post("close")
+
+	def set_my_description(
+		self,
+		description: Optional[str] = "",
+		language_code: Optional[str] = "",
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#setmydescription
+
+		:param description:
+		:param language_code:
+		:param kwargs:
+		:param timeout:
+		:return:
+		"""
+
+		payload = {
+			"description": description,
+			"language_code": language_code
+		}
+
+		return self._post(
+			"setMyDescription",
+			payload=payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def get_my_description(
+		self,
+		language_code: Optional[str] = "",
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#getMyDescription
+
+		:param language_code:
+		:param kwargs:
+		:param timeout:
+		:return:
+		"""
+
+		payload = {
+			"language_code": language_code
+		}
+
+		return self._post(
+			"getMyDescription",
+			payload=payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def set_my_short_description(
+		self,
+		short_description: Optional[str] = "",
+		language_code: Optional[str] = "",
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#setMyShortDescription
+
+		:param short_description:
+		:param language_code:
+		:param kwargs:
+		:param timeout:
+		:return:
+		"""
+
+		payload = {
+			"short_description": short_description,
+			"language_code": language_code
+		}
+
+		return self._post(
+			"setMyShortDescription",
+			payload=payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)
+
+	def get_my_short_description(
+		self,
+		language_code: Optional[str] = "",
+		timeout: float = None,
+		kwargs: Dict = None
+	) -> bool:
+		"""
+		https://core.telegram.org/bots/api#getMyShortDescription
+
+		:param language_code:
+		:param kwargs:
+		:param timeout:
+		:return:
+		"""
+
+		payload = {
+			"language_code": language_code
+		}
+
+		return self._post(
+			"getMyShortDescription",
+			payload=payload,
+			timeout=timeout,
+			kwargs=kwargs
+		)

@@ -23,7 +23,7 @@ def test__video__init():
 	assert _.width == 100
 	assert _.height == 100
 	assert _.duration == 10
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.file_name is None
 	assert _.mime_type is None
 	assert _.file_size is None
@@ -89,7 +89,7 @@ def test__video__de_json():
 	assert _.width == 100
 	assert _.height == 100
 	assert _.duration == 10
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.file_name is None
 	assert _.mime_type is None
 	assert _.file_size is None

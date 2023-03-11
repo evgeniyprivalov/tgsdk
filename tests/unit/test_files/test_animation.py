@@ -25,7 +25,7 @@ def test__animation__init():
 	assert _.duration == 10
 	assert _.file_name is None
 	assert _.bot is None
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.mime_type is None
 	assert _.file_size is None
 
@@ -91,7 +91,7 @@ def test__animation__de_json():
 	assert _.duration == 10
 	assert _.file_name is None
 	assert _.bot is None
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.mime_type is None
 	assert _.file_size is None
 

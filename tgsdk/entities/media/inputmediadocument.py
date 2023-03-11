@@ -4,30 +4,19 @@
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
 from pathlib import Path
-from typing import (
-	Optional,
-	Any,
-	Union,
-	List,
-	IO
-)
+from typing import IO, Any, List, Optional, Union
 
-from tgsdk import (
-	Document,
-	InputFile,
-	MessageEntity,
-	InputMedia,
-)
+from tgsdk import Document, InputFile, InputMedia, MessageEntity
 from tgsdk.utils.get_input_file import get_input_file
 
 
 class InputMediaDocument(InputMedia):
-	__slots__ = ("media", "thumb", "caption", "parse_mode", "caption_entities", "disable_content_type_detection", "file_name")
+	__slots__ = ("media", "thumbnail", "caption", "parse_mode", "caption_entities", "disable_content_type_detection", "file_name")
 
 	def __init__(
 		self,
 		media: Union[Union[str, bytes, Union[IO, "InputFile"], Path], Document],
-		thumb: Optional[Union[str, bytes, Union[IO, "InputFile"], Path]] = None,
+		thumbnail: Optional[Union[str, bytes, Union[IO, "InputFile"], Path]] = None,
 		caption: Optional[str] = None,
 		parse_mode: Optional[str] = None,
 		caption_entities: Optional[List[MessageEntity]] = None,
@@ -42,7 +31,7 @@ class InputMediaDocument(InputMedia):
 		)
 
 		self.media = media
-		self.thumb = thumb
+		self.thumbnail = thumbnail
 		self.caption = caption
 		self.parse_mode = parse_mode
 		self.file_name = file_name
@@ -50,5 +39,5 @@ class InputMediaDocument(InputMedia):
 
 		self.media = get_input_file(media, Document, as_attach=True, file_name=self.file_name)
 
-		if thumb:
-			self.thumb = get_input_file(thumb, as_attach=True)
+		if thumbnail:
+			self.thumbnail = get_input_file(thumbnail, as_attach=True)

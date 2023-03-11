@@ -6,11 +6,9 @@
 import json
 import unittest
 
+from tgsdk import Document, InputMediaDocument
 
-from tgsdk import InputMediaDocument, Document
-
-
-# TODO: "media" as Bytes | IO AND "thumb"
+# TODO: "media" as Bytes | IO AND "thumbnail"
 
 def test__inputmediadocument__init():
 	_ = InputMediaDocument(
@@ -25,7 +23,7 @@ def test__inputmediadocument__init():
 
 	assert _.media == "file_id"
 
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.caption is None
 	assert _.parse_mode is None
 	assert _.caption_entities is None
@@ -81,7 +79,7 @@ def test__inputmediadocument__de_json():
 
 	assert _.media == "file_id"
 
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.caption is None
 	assert _.parse_mode is None
 	assert _.caption_entities is None

@@ -21,7 +21,7 @@ def test__videonote__init():
 	assert _.file_unique_id == "file_unique_id"
 	assert _.length == 20
 	assert _.duration == 10
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.file_size is None
 	assert _.bot is None
 
@@ -79,7 +79,7 @@ def test__videonote__de_json():
 	assert _.file_unique_id == "file_unique_id"
 	assert _.length == 20
 	assert _.duration == 10
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.file_size is None
 	assert _.bot is None
 

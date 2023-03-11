@@ -3,29 +3,20 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	Optional,
-	Any,
-	Union,
-	List
-)
+from typing import Any, List, Optional, Union
 
-from tgsdk import (
-	Animation,
-	InputMedia,
-	MessageEntity
-)
+from tgsdk import Animation, InputMedia, MessageEntity
 from tgsdk.entities.inputfile import InputFile
 from tgsdk.utils.get_input_file import get_input_file
 
 
 class InputMediaAnimation(InputMedia):
-	__slots__ = ("media", "thumb", "caption", "parse_mode", "caption_entities", "width", "height", "duration", "file_name")
+	__slots__ = ("media", "thumbnail", "caption", "parse_mode", "caption_entities", "width", "height", "duration", "file_name", "has_spoiler")
 
 	def __init__(
 		self,
 		media: Union[InputFile, Animation],
-		thumb: Optional[InputFile] = None,
+		thumbnail: Optional[InputFile] = None,
 		caption: Optional[str] = None,
 		parse_mode: Optional[str] = None,
 		caption_entities: Optional[List[MessageEntity]] = None,
@@ -33,6 +24,7 @@ class InputMediaAnimation(InputMedia):
 		height: Optional[int] = None,
 		duration: Optional[int] = None,
 		file_name: Optional[str] = None,
+		has_spoiler: Optional[str] = None,
 
 		**_kwargs: Any
 	):
@@ -42,10 +34,11 @@ class InputMediaAnimation(InputMedia):
 		)
 
 		self.media = media
-		self.thumb = thumb
+		self.thumbnail = thumbnail
 		self.caption = caption
 		self.parse_mode = parse_mode
 		self.file_name = file_name
+		self.has_spoiler = has_spoiler
 
 		if isinstance(media, Animation):
 			self.media = media.file_id  # type: str
@@ -60,5 +53,5 @@ class InputMediaAnimation(InputMedia):
 			self.height = height
 			self.duration = duration
 
-		if thumb:
-			self.thumb = get_input_file(thumb, as_attach=True)
+		if thumbnail:
+			self.thumbnail = get_input_file(thumbnail, as_attach=True)

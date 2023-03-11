@@ -3,24 +3,15 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	Optional,
-	Any,
-	Union,
-	List
-)
+from typing import Any, List, Optional, Union
 
-from tgsdk import (
-	PhotoSize,
-	InputMedia,
-	MessageEntity
-)
+from tgsdk import InputMedia, MessageEntity, PhotoSize
 from tgsdk.utils.get_input_file import get_input_file
 from tgsdk.utils.types import FileInput
 
 
 class InputMediaPhoto(InputMedia):
-	__slots__ = ("media", "caption", "parse_mode", "caption_entities", "file_name")
+	__slots__ = ("media", "caption", "parse_mode", "caption_entities", "file_name", "has_spoiler")
 
 	def __init__(
 		self,
@@ -29,6 +20,7 @@ class InputMediaPhoto(InputMedia):
 		parse_mode: Optional[str] = None,
 		caption_entities: Optional[List[MessageEntity]] = None,
 		file_name: Optional[str] = None,
+		has_spoiler: Optional[bool] = None,
 
 		**_kwargs: Any
 	):
@@ -41,5 +33,6 @@ class InputMediaPhoto(InputMedia):
 		self.caption = caption
 		self.parse_mode = parse_mode
 		self.file_name = file_name
+		self.has_spoiler = has_spoiler
 
 		self.media = get_input_file(media, PhotoSize, as_attach=True, file_name=self.file_name)

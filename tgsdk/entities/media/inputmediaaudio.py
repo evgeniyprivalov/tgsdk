@@ -3,29 +3,19 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	Optional,
-	Any,
-	Union,
-	List
-)
+from typing import Any, List, Optional, Union
 
-from tgsdk import (
-	Audio,
-	InputFile,
-	InputMedia,
-	MessageEntity
-)
+from tgsdk import Audio, InputFile, InputMedia, MessageEntity
 from tgsdk.utils.get_input_file import get_input_file
 
 
 class InputMediaAudio(InputMedia):
-	__slots__ = ("media", "thumb", "caption", "parse_mode", "caption_entities", "duration", "performer", "title", "file_name")
+	__slots__ = ("media", "thumbnail", "caption", "parse_mode", "caption_entities", "duration", "performer", "title", "file_name")
 
 	def __init__(
 		self,
 		media: Union[InputFile, Audio],
-		thumb: Optional[InputFile] = None,
+		thumbnail: Optional[InputFile] = None,
 		caption: Optional[str] = None,
 		parse_mode: Optional[str] = None,
 		caption_entities: Optional[List[MessageEntity]] = None,
@@ -42,7 +32,7 @@ class InputMediaAudio(InputMedia):
 		)
 
 		self.media = media
-		self.thumb = thumb
+		self.thumbnail = thumbnail
 		self.caption = caption
 		self.parse_mode = parse_mode
 		self.file_name = file_name
@@ -60,5 +50,5 @@ class InputMediaAudio(InputMedia):
 			self.duration = duration
 			self.performer = performer
 
-		if thumb:
-			self.thumb = get_input_file(thumb, as_attach=True)
+		if thumbnail:
+			self.thumbnail = get_input_file(thumbnail, as_attach=True)

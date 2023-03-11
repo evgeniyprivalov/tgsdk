@@ -3,12 +3,10 @@
 
 # Copyright (c) 2015-2022 Evgeniy Privalov, https://linkedin.com/in/evgeniyprivalov/
 
-from typing import (
-	Optional,
-	Any
-)
+from typing import Any, Optional
 
 from tgsdk import TelegramEntity
+
 from .photosize import PhotoSize
 
 
@@ -17,7 +15,7 @@ class Sticker(TelegramEntity):
 	https://core.telegram.org/bots/api#sticker
 
 	"""
-	__slots__ = ("file_id", "file_unique_id", "width", "height", "is_animated", "thumb", "emoji", "set_name", "mask_position", "file_size")
+	__slots__ = ("file_id", "file_unique_id", "width", "height", "is_animated", "thumbnail", "emoji", "set_name", "mask_position", "file_size")
 
 	def __init__(
 		self,
@@ -26,7 +24,7 @@ class Sticker(TelegramEntity):
 		width: int,
 		height: int,
 		is_animated: bool,
-		thumb: Optional[PhotoSize] = None,
+		thumbnail: Optional[PhotoSize] = None,
 		emoji: Optional[str] = None,
 		set_name: Optional[str] = None,
 		mask_position: Optional[str] = None,
@@ -39,7 +37,7 @@ class Sticker(TelegramEntity):
 		self.width = width
 		self.height = height
 		self.is_animated = is_animated
-		self.thumb = thumb
+		self.thumbnail = thumbnail
 		self.emoji = emoji
 		self.set_name = set_name
 		self.mask_position = mask_position

@@ -17,7 +17,7 @@ def test__document__init():
 
 	assert _.file_id == "file_id"
 	assert _.file_unique_id == "file_unique_id"
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.file_name is None
 	assert _.mime_type is None
 	assert _.file_size is None
@@ -65,7 +65,7 @@ def test__document__de_json():
 	assert isinstance(_, Document) is True
 	assert _.file_id == "file_id"
 	assert _.file_unique_id == "file_unique_id"
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.file_name is None
 	assert _.mime_type is None
 	assert _.file_size is None

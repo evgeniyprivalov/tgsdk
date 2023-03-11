@@ -6,11 +6,9 @@
 import json
 import unittest
 
-
 from tgsdk import InputMediaPhoto, PhotoSize
 
-
-# TODO: "media" as Bytes | IO AND "thumb"
+# TODO: "media" as Bytes | IO AND "thumbnail"
 
 def test__inputmediaphoto__init():
 	_ = InputMediaPhoto(

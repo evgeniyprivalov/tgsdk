@@ -6,11 +6,9 @@
 import json
 import unittest
 
+from tgsdk import Animation, InputMediaAnimation
 
-from tgsdk import InputMediaAnimation, Animation
-
-
-# TODO: "media" as Bytes | IO AND "thumb"
+# TODO: "media" as Bytes | IO AND "thumbnail"
 
 def test__inputmediaanimation__init():
 	_ = InputMediaAnimation(
@@ -31,7 +29,7 @@ def test__inputmediaanimation__init():
 	assert _.width == 100
 	assert _.height == 100
 	assert _.duration == 10
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.caption is None
 	assert _.parse_mode is None
 	assert _.caption_entities is None
@@ -110,7 +108,7 @@ def test__inputmediaanimation__de_json():
 	assert _.width == 100
 	assert _.height == 100
 	assert _.duration == 10
-	assert _.thumb is None
+	assert _.thumbnail is None
 	assert _.caption is None
 	assert _.parse_mode is None
 	assert _.caption_entities is None

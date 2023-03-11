@@ -10,29 +10,22 @@ except ImportError:
 
 import platform
 import socket
-from typing import (
-	Optional,
-	Union,
-	Dict
-)
+from typing import Dict, Optional, Union
 
 import certifi
 import urllib3
 from urllib3.connection import HTTPSConnection
 
-from tgsdk import (
-	InputFile,
-	InputMedia
-)
+from tgsdk import InputFile, InputMedia
 from tgsdk.network.errors import (
-	TelegramException,
-	TimeOutError,
-	NetworkError,
-	ChatMigrated,
-	BadRequest,
-	Unauthorized,
-	RetryAfter,
-	InvalidToken
+    BadRequest,
+    ChatMigrated,
+    InvalidToken,
+    NetworkError,
+    RetryAfter,
+    TelegramException,
+    TimeOutError,
+    Unauthorized,
 )
 
 
@@ -220,8 +213,8 @@ class Request(object):
 						if isinstance(media.media, InputFile):
 							payload[media.media.file_attach_name] = media.media.tuple_mapping_values
 
-							if hasattr(media, "thumb"):
-								payload[media.thumb.file_attach_name] = media.thumb.field_tuple
+							if hasattr(media, "thumbnail"):
+								payload[media.thumbnail.file_attach_name] = media.thumbnail.field_tuple
 
 					payload[key] = json.dumps(media_list)
 
